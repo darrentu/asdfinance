@@ -18,12 +18,6 @@ nec = []
 
 mint =  json.load(urllib2.urlopen("http://intuit-mint.herokuapp.com/api/v1/user/transactions"))
 l = len(mint)//30
-	
-#counters for iterating by day
-ftot = 0
-etot = 0
-ntot = 0
-i = 0
 
 #userinput and my ouput
 uinp = {
@@ -36,7 +30,8 @@ uinp = {
 myout = {
 	'f': 0,
 	'e': 0,
-	'n': 0
+	'n': 0,
+	'd': 0
 }
 
 
@@ -51,12 +46,12 @@ def receive(userinput):
 
 @socketio.on('nextday')
 def nextDay():
-	if i > 30:
-		i = 0
+	if myout['d'] > 30:
+		myout['d'] = 0
 		mint =  json.load(urllib2.urlopen("http://intuit-mint.herokuapp.com/api/v1/user/transactions"))
 		l = len(mint)//30
 
-	for k in range(l*i, l*(i+1)):
+	for k in range(l*myout['d'], l*(myout['d']+1)):
 		t = mint[k]
 		if t['category'] in foods:
 			food.append((-1*t['amount'], t['name']))
@@ -67,11 +62,9 @@ def nextDay():
 		elif t['category'] in necs:
 			nec.append((-1*t['amount'], t['name']))
 			myout['n']+=-1*t['amount']
+
 	emit('parsedmint', myout)
-	i += 1
-	# Corsair.SetLedsColors([CorsairLedColor(CLK.A, 0, 255, 0), CorsairLedColor(CLK.B, 0, 255, 0)])
+	myout['d'] += 1
 
 if __name__ == '__main__':
     socketio.run(app)
-
-	
