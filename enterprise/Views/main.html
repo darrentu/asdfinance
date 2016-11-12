@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>asdfinance</title>
+
+    <!-- Bootstrap -->
+    <link href="../../public/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="../../public/css/main.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="../Controllers/form.js"></script>
+  </head>
+  <body>
+  	<div class="container-fluid">
+  		<div class="row">
+	    	<h1 class = "col-md-6 col-md-offset-3 col-xs-6">Welcome to <span class="bit-font">asdfinance</span></h1>
+	    </div>
+
+	    <div class="row">
+		    <h2 class="col-md-8">Please insert your relevant financial inforomation so we can get you set up:</h2>
+		</div>
+
+		<div class="row">
+			<h4 lass="col-md-offset-1 col-md-8">
+		    	We will collect information about your overall budget and how you would like to break down your budget, so we can help you monitor it
+		    </h4>
+		</div>
+
+	    <div ng-controller="dataController">
+	    	<div>
+	    		<form novalidate class="simple-form">
+		    	Total amount to spend: <input type="text" ng-model="user.total" /><br />
+		    </div>
+
+		    <br />
+		    <div class="category" id="1">
+		    	Food: <input type="text" ng-model="user.food" /><br />
+		    	% to spend: <input type="text" ng-model="user.percent1" /><br />
+		    </div>
+
+		    <br />
+		    <div class="category" id="2">
+		    	Necessities: <input type="text" ng-model="user.necessities" /><br />
+		    	% to spend: <input type="text" ng-model="user.percent1" /><br />
+		    </div>
+
+		    <br />
+		    <div class="category" id="3">
+		    	Entertainment: <input type="text" ng-model="user.entertainment" /><br />
+		    	% to spend: <input type="text" ng-model="user.percent1" /><br />
+		    </div>
+
+		    <input type="button" ng-click="reset()" value="Reset" />
+		    <input type="submit" ng-click="update(user)" value="Save" />
+		  </form>
+		</div>
+	</div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../../public/js/bootstrap.min.js"></script>
+  </body>
+</html>
