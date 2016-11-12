@@ -15,6 +15,10 @@ necs = ["Groceries", "Home Improvement"]
 food = []
 ent = []
 nec = []
+fkeys = []
+ekeys = []
+nkeys = []
+
 
 mint =  json.load(urllib2.urlopen("http://intuit-mint.herokuapp.com/api/v1/user/transactions"))
 l = len(mint)//30
@@ -34,6 +38,9 @@ myout = {
 	'd': 0
 }
 
+def colorMaker(actual, ideal):
+	tot = actual+ideal
+	return ((255*actual)//tot, (255*ideal)//tot, 0)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -41,11 +48,19 @@ socketio = SocketIO(app)
 
 @socketio.on('userinput')
 def receive(userinput):
-    print('received json: ' + str(userinput))
+	global uinp
     uinp = json.decode(userinput)
 
 @socketio.on('nextday')
 def nextDay():
+	global uinp
+	global myout
+	global mint
+	global l
+	global food
+	global ent
+	global nec
+
 	if myout['d'] > 30:
 		myout['d'] = 0
 		mint =  json.load(urllib2.urlopen("http://intuit-mint.herokuapp.com/api/v1/user/transactions"))
@@ -63,7 +78,7 @@ def nextDay():
 			nec.append((-1*t['amount'], t['name']))
 			myout['n']+=-1*t['amount']
 
-	emit('parsedmint', myout)
+	socketio.emit('parsedmint', myout)
 	myout['d'] += 1
 
 if __name__ == '__main__':
