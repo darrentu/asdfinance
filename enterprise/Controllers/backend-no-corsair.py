@@ -5,9 +5,9 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO
 
 #cue support
-from cue_sdk import *
-Corsair = CUESDK("CUESDK.x64_2013.dll")
-Corsair.RequestControl(CAM.ExclusiveLightingControl)
+# from cue_sdk import *
+# Corsair = CUESDK("CUESDK.x64_2013.dll")
+# Corsair.RequestControl(CAM.ExclusiveLightingControl)
 
 foods = ["Restaurant", "Fast Food", "Alcohol & Bars",]
 ents = ["Travel", "Shopping", "Entertainment"]
@@ -51,6 +51,11 @@ def receive(userinput):
 
 @socketio.on('nextday')
 def nextDay():
+	if i > 30:
+		i = 0
+		mint =  json.load(urllib2.urlopen("http://intuit-mint.herokuapp.com/api/v1/user/transactions"))
+		l = len(mint)//30
+
 	for k in range(l*i, l*(i+1)):
 		t = mint[k]
 		if t['category'] in foods:
@@ -62,9 +67,9 @@ def nextDay():
 		elif t['category'] in necs:
 			nec.append((-1*t['amount'], t['name']))
 			myout['n']+=-1*t['amount']
-
 	emit('parsedmint', myout)
 	i += 1
+	# Corsair.SetLedsColors([CorsairLedColor(CLK.A, 0, 255, 0), CorsairLedColor(CLK.B, 0, 255, 0)])
 
 if __name__ == '__main__':
     socketio.run(app)
