@@ -12,25 +12,44 @@
 
     <link href="../../public/css/main.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="../Controllers/form.js"></script>
   </head>
   <body>
     <h1>Welcome to <span class="bit-font">asdfinance</span></h1>
 
     <h2>Please insert your relevant financial inforomation so we can get you set up:</h2>
 
-    <div ng-controller="dataController">
-    	<form novalidate class="simple-form">
-	    Total amount to spend: <input type="text" ng-model="user.total" /><br />
+    <h4>
+    	We will collect information about your overall budget and how you would like to break down your budget, so we can help you monitor it
+    </h4>
 
-	    category: <input type="text" ng-model="user.category" /><br />
-	    Total amount to spend: <input type="text" ng-model="user.total" /><br />
+    <div ng-controller="dataController">
+    	<div>
+    		<form novalidate class="simple-form">
+	    	Total amount to spend: <input type="text" ng-model="user.total" /><br />
+	    </div>
+
+	    <br />
+	    <div class="category" id="1">
+	    	Food: <input type="text" ng-model="user.food" /><br />
+	    	% to spend: <input type="text" ng-model="user.percent1" /><br />
+	    </div>
+
+	    <br />
+	    <div class="category" id="2">
+	    	Necessities: <input type="text" ng-model="user.necessities" /><br />
+	    	% to spend: <input type="text" ng-model="user.percent1" /><br />
+	    </div>
+
+	    <br />
+	    <div class="category" id="3">
+	    	Entertainment: <input type="text" ng-model="user.entertainment" /><br />
+	    	% to spend: <input type="text" ng-model="user.percent1" /><br />
+	    </div>
 
 	    <input type="button" ng-click="reset()" value="Reset" />
 	    <input type="submit" ng-click="update(user)" value="Save" />
