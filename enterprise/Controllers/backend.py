@@ -5,9 +5,10 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO
 
 #cue support
-# from cue_sdk import *
-# Corsair = CUESDK("CUESDK.x64_2013.dll")
-# Corsair.RequestControl(CAM.ExclusiveLightingControl)
+from cue_sdk import *
+Corsair = CUESDK("CUESDK.x64_2013.dll")
+Corsair.RequestControl(CAM.ExclusiveLightingControl)
+
 foods = ["Restaurant", "Fast Food", "Alcohol & Bars",]
 ents = ["Travel", "Shopping", "Entertainment"]
 necs = ["Groceries", "Home Improvement"]
