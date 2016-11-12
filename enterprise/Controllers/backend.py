@@ -28,7 +28,7 @@ i = 0
 uinp = {
 	'f': 0.2,
 	'e': 0.2,
-	'n': 0.3
+	'n': 0.3,
 	'b': 1000
 }
 
@@ -48,10 +48,8 @@ def receive(userinput):
     print('received json: ' + str(userinput))
     uinp = json.decode(userinput)
 
-if __name__ == '__main__':
-    socketio.run(app)
-
-while raw_input() == "next" and i<30:
+@socketio.on('nextday')
+def nextDay():
 	for k in range(l*i, l*(i+1)):
 		t = mint[k]
 		if t['category'] in foods:
@@ -63,7 +61,11 @@ while raw_input() == "next" and i<30:
 		elif t['category'] in necs:
 			nec.append((-1*t['amount'], t['name']))
 			myout['n']+=-1*t['amount']
-			
-	emit('parsedmint', myout)
 
-	i+= 1
+	emit('parsedmint', myout)
+	i += 1
+
+if __name__ == '__main__':
+    socketio.run(app)
+
+	
