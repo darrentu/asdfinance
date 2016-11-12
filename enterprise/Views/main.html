@@ -10,63 +10,96 @@
     <!-- Bootstrap -->
     <link href="../../public/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="../../public/css/main.css" rel="stylesheet">
-
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-    <script src="../Controllers/form.js"></script>
+    <link href="../../public/css/main.css" rel="stylesheet">
   </head>
   <body>
   	<div class="container-fluid">
-  		<div class="row">
-	    	<h1 class = "col-md-6 col-md-offset-3 col-xs-6">Welcome to <span class="bit-font">asdfinance</span></h1>
+  		<div class="row title-main">
+	    	<h1 class = "col-sm-8 col-sm-offset-3 col-xs-6">Welcome to <span class="bit-font">asdfinance</span></h1>
 	    </div>
 
 	    <div class="row">
-		    <h2 class="col-md-8">Please insert your relevant financial inforomation so we can get you set up:</h2>
+		    <h2 class="col-sm-10">Please enter your relevant financial inforomation so we can get you set up</h2>
 		</div>
 
 		<div class="row">
-			<h4 lass="col-md-offset-1 col-md-8">
-		    	We will collect information about your overall budget and how you would like to break down your budget, so we can help you monitor it
-		    </h4>
+			<h3 class="col-sm-10">
+		    	We will collect information about your overall budget and how you would like to break down your spending, so we can help you monitor it.
+		    </h3>
 		</div>
 
-	    <div ng-controller="dataController">
-	    	<div>
-	    		<form novalidate class="simple-form">
-		    	Total amount to spend: <input type="text" ng-model="user.total" /><br />
-		    </div>
-
-		    <br />
-		    <div class="category" id="1">
-		    	Food: <input type="text" ng-model="user.food" /><br />
-		    	% to spend: <input type="text" ng-model="user.percent1" /><br />
-		    </div>
-
-		    <br />
-		    <div class="category" id="2">
-		    	Necessities: <input type="text" ng-model="user.necessities" /><br />
-		    	% to spend: <input type="text" ng-model="user.percent1" /><br />
-		    </div>
-
-		    <br />
-		    <div class="category" id="3">
-		    	Entertainment: <input type="text" ng-model="user.entertainment" /><br />
-		    	% to spend: <input type="text" ng-model="user.percent1" /><br />
-		    </div>
-
-		    <input type="button" ng-click="reset()" value="Reset" />
-		    <input type="submit" ng-click="update(user)" value="Save" />
-		  </form>
+	    <div ng-controller="dataController" class="formContainer">	    		
+		  <form novalidate class="form-horizontal">
+			  <div class="form-group">
+			    <label class="control-label col-sm-2" for="total">Total:</label>
+			    <div class="col-sm-6"> 
+			      <input type="text" class="form-control" id="total" ng-model="user.total" placeholder="Enter total $ to spend">
+			    </div>
+			  </div>
+			  <br />
+			  <div class="form-group">
+			    <label class="control-label col-sm-2" for="food">Food:</label>
+			    <div class="col-sm-6">
+			      <input type="text" class="form-control" id="food" ng-model="user.percent" placeholder="Enter % to spend">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-sm-2" for="necessities">Necessities:</label>
+			    <div class="col-sm-6"> 
+			      <input type="text" class="form-control" id="necessities" ng-model="user.percent" placeholder="Enter % to spend">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label col-sm-2" for="entertainment">Entertainment:</label>
+			    <div class="col-sm-6"> 
+			      <input type="text" class="form-control" id="entertainment" ng-model="user.percent" placeholder="Enter % to spend">
+			    </div>
+			  </div>
+			  <div class="form-group"> 
+			    <div class="col-sm-offset-2 col-sm-6">
+			      <button type="submit" class="btn btn-default" ng-click="update(user)">Submit</button>
+			      <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
+			    </div>
+			  </div>
+			</form>
 		</div>
+		<div class="row">
+			<div class="col-sm-offset-2 col-sm-6">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+				  View my Budget Breakdown
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Your Breakdown</h4>
+	      </div>
+	      <div class="modal-body">
+	        <canvas id="myChart" width="200" height="200"></canvas>
+	        <canvas id="myChart2" width="200" height="200"></canvas>
+	      </div>
+
+	    </div>
+	  </div>
 	</div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../../public/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="../../public/js/angular.min.js"></script>
+
+    <script src="../Controllers/form.js"></script>
+    </script>
   </body>
 </html>

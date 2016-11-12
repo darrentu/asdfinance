@@ -1,3 +1,11 @@
+.title-main{
+	background-color: #2e6da4;
+}
+
 .bit-font {
 	font-family: 'Press Start 2P', cursive;
+}
+
+.formContainer {
+	padding-top: 10px;
 }
