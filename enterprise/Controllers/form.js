@@ -37,7 +37,7 @@ angular.module('userForm', [])
         $scope.food = Math.round((data.n/$scope.totalSpentToday)*100);         
         $scope.entertainment = Math.round((data.n/$scope.totalSpentToday)*100);      
         $scope.necessities = Math.round((data.n/$scope.totalSpentToday)*100);  
-        console.log($scope.food);     
+             
         if (localStorage.getItem('budget') !== null) {
             budget = JSON.parse(localStorage.getItem('budget'));
         } else {
@@ -48,8 +48,8 @@ angular.module('userForm', [])
         console.log($scope.food);
         console.log($scope.entertainment);
         console.log($scope.necessities);
-        console.log($scope.totalSpentToday);
-        console.log(data);*/
+        console.log($scope.totalSpentToday);*/
+        console.log(data);
 
         var ctxPie1 = document.getElementById("actualPie");
             var actualPie = new Chart(ctxPie1, {
