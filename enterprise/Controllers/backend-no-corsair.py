@@ -57,7 +57,7 @@ def colorMaker(actual, ideal):
 	a = 0
 	if r > g:
 		a = 255//r
-	else 
+	else: 
 		a = 255//g
 	r *= a
 	g *= a
@@ -69,7 +69,6 @@ socketio = SocketIO(app)
 
 @socketio.on('userinput')
 def receive(userinput):
-	global uinp
     uinp = json.decode(userinput)
 
 @socketio.on('mode')
