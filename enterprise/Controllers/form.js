@@ -3,8 +3,32 @@
 angular.module('userForm', [])
     .controller('dataController', ['$scope', function($scope) {
       $scope.master = {};
-      
       var socket = io.connect('http://localhost:5000');
+      $scope.update = function(user) {
+
+        $scope.master = angular.copy(user);
+        var budget = JSON.stringify({
+                          "f":user.total,
+                          "e":user.food,
+                          "n":user.necessities,
+                          "b":user.entertainment
+                          });
+        localStorage.setItem("budget",budget);
+        console.log(budget);
+        socket.emit('userinput',budget);
+        
+        
+      };
+
+      $scope.reset = function() {
+        //$scope.user = angular.copy($scope.master);
+
+        //console.log(JSON.parse(localStorage.getItem('budget')));
+      };
+
+      $scope.reset();
+      
+      
       socket.emit('nextday');
       socket.on('parsedmint', function (data) {
         $scope.category = data;
@@ -12,12 +36,19 @@ angular.module('userForm', [])
          
         $scope.food = Math.round((data.n/$scope.totalSpentToday)*100);         
         $scope.entertainment = Math.round((data.n/$scope.totalSpentToday)*100);      
-        $scope.necessities = Math.round((data.n/$scope.totalSpentToday)*100);        
-         
+        $scope.necessities = Math.round((data.n/$scope.totalSpentToday)*100);  
+             
+        if (localStorage.getItem('budget') !== null) {
+            budget = JSON.parse(localStorage.getItem('budget'));
+        } else {
+            budget = {"f":33,"e":33,"n":33,"b":1000};
+        }
+        
+         /*
         console.log($scope.food);
         console.log($scope.entertainment);
         console.log($scope.necessities);
-        console.log($scope.totalSpentToday);
+        console.log($scope.totalSpentToday);*/
         console.log(data);
 
         var ctxPie1 = document.getElementById("actualPie");
@@ -28,7 +59,7 @@ angular.module('userForm', [])
                     labels: ["Food (%)", "Necessities (%)", "Entertainment (%)"],
 
                     datasets: [{
-                        data: [30, 60, 10],
+                        data: [budget.f, budget.n, budget.e],
                     backgroundColor: [
                         "#c02dff",
                         "#f97b36",
@@ -78,7 +109,7 @@ angular.module('userForm', [])
                             pointBorderColor: "#fff",
                             pointHoverBackgroundColor: "#fff",
                             pointHoverBorderColor: "rgba(16, 204, 78,1)",
-                            data: [30, 60, 10]
+                            data: [budget.f, budget.n, budget.e]
                         },
                         {
                             label: "Actual Percentage (%)",
@@ -102,15 +133,7 @@ angular.module('userForm', [])
             });
     });
       
-      $scope.update = function(user) {
-        $scope.master = angular.copy(user);
-      };
-
-      $scope.reset = function() {
-        $scope.user = angular.copy($scope.master);
-      };
-
-      $scope.reset();
+      
     }]);
 
 $( "#idealGraph" ).click(
