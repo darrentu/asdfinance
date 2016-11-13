@@ -71,6 +71,7 @@ socketio = SocketIO(app)
 @socketio.on('userinput')
 def receive(userinput):
 	global uinp
+	print userinput
 	uinp = json.loads(userinput)
 	uinp['f'] /= float(100)
 	uinp['e'] /= float(100)
