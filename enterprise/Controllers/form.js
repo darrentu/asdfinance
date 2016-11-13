@@ -188,7 +188,7 @@ $( "#actualGraph" ).click(
     if ($('#actualAdvanced').is(":checked")){
         socket1.emit('mode', 0);
     } else {
-        socket1.emit('mode', 3);
+        socket1.emit('mode', 4);
     }
   });
 
