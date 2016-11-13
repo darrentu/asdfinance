@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>asdfinance</title>
+    <title >asdfinance</title>
 
     <!-- Bootstrap -->
     <link href="../../public/css/bootstrap.min.css" rel="stylesheet">
@@ -15,63 +15,63 @@
     <link href="../../public/css/main.css" rel="stylesheet">
   </head>
   <body>
-  	<div class="container-fluid">
-  		<div class="row title-main">
-	    	<h1 class = "col-sm-8 col-sm-offset-3 col-xs-6">Welcome to <span class="bit-font">asdfinance</span></h1>
-	    </div>
-
+  	
+  	
+  		<nav class="navbar navbar-default navbar-static-top">
+  		<div style="text-align: center; padding-top: 15px; font-size: 20px"><span class="bit-font">Asdfinance</span></div>
+		</nav>
+<!--
 	    <div class="row">
-		    <h2 class="col-sm-10">Please enter your relevant financial inforomation so we can get you set up</h2>
-		</div>
-
-		<div class="row">
-			<h3 class="col-sm-10">
-		    	We will collect information about your overall budget and how you would like to break down your spending, so we can help you monitor it.
-		    </h3>
-		</div>
-
-	    <div ng-controller="dataController" class="formContainer">	    		
-		  <form novalidate class="form-horizontal">
-			  <div class="form-group">
-			    <label class="control-label col-sm-2" for="total">Total:</label>
-			    <div class="col-sm-6"> 
-			      <input type="text" class="form-control" id="total" ng-model="user.total" placeholder="Enter total $ to spend, $1000 by default">
-			    </div>
-			  </div>
-			  <br />
-			  <div class="form-group">
-			    <label class="control-label col-sm-2" for="food">Food:</label>
-			    <div class="col-sm-6">
-			      <input type="text" class="form-control" id="food" ng-model="user.food" placeholder="Enter % to spend, 30% by default">
-			    </div>
-			  </div>
-			  <div class="form-group">
-			    <label class="control-label col-sm-2" for="necessities">Necessities:</label>
-			    <div class="col-sm-6"> 
-			      <input type="text" class="form-control" id="necessities" ng-model="user.necessities" placeholder="Enter % to spend, 30% by default">
-			    </div>
-			  </div>
-			  <div class="form-group">
-			    <label class="control-label col-sm-2" for="entertainment">Entertainment:</label>
-			    <div class="col-sm-6"> 
-			      <input type="text" class="form-control" id="entertainment" ng-model="user.entertainment" placeholder="Enter % to spend, 30% by default">
-			    </div>
-			  </div>
-			  <div class="form-group"> 
-			    <div class="col-sm-offset-2 col-sm-6">
-			      <button type="submit" class="btn btn-default" ng-click="update(user)">Submit</button>
-			      <!--<button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>-->
-			    </div>
-			  </div>
-			</form>
+		    
+		    Please enter your relevant financial inforomation so we can get you set up
+		    
+		</div>-->
+		<div class="container">
 			<div class="row">
-			<div class="col-sm-offset-2 col-sm-6">
-				<!-- Button trigger modal -->
-				<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-				  View my Budget Breakdown
-				</button>
-			</div>
+			<br><br>
+		    <div ng-controller="dataController" class="formContainer">	    		
+			  <form novalidate class="form-horizontal">
+				  <div class="form-group">
+				    <label class="control-label col-sm-2" for="total">Total:</label>
+				    <div class="col-sm-6"> 
+				      <input type="text" class="form-control" id="total" ng-model="user.total" placeholder="Enter total $ to spend, $1000 by default">
+				    </div>
+				  </div>
+				  <br />
+				  <div class="form-group">
+				    <label class="control-label col-sm-2" for="food">Food:</label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" id="food" ng-model="user.food" placeholder="Enter % to spend, 30% by default">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="control-label col-sm-2" for="necessities">Necessities:</label>
+				    <div class="col-sm-6"> 
+				      <input type="text" class="form-control" id="necessities" ng-model="user.necessities" placeholder="Enter % to spend, 30% by default">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="control-label col-sm-2" for="entertainment">Entertainment:</label>
+				    <div class="col-sm-6"> 
+				      <input type="text" class="form-control" id="entertainment" ng-model="user.entertainment" placeholder="Enter % to spend, 30% by default">
+				    </div>
+				  </div>
+				  <div class="form-group"> 
+				    <div class="col-sm-offset-2 col-sm-6">
+				      <button type="submit" class="btn btn-default btn-block" ng-click="update(user)">Submit</button>
+				      
+				    </div>
+				  </div>
+				</form>
+				<div class="row">
+				<div class="col-sm-offset-2 col-sm-6">
+					<!-- Button trigger modal -->
+					<button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">
+					  View my Budget Breakdown
+					</button>
+				</div>
 		</div>
+	</div>
 	</div>
 
 	<!-- Modal -->
