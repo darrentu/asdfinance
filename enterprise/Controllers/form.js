@@ -113,19 +113,7 @@ angular.module('userForm', [])
       $scope.reset();
     }]);
 
-$( "#idealGraph" ).click(
-  function() {
-    $( this ).css("background-color", "rgb(196, 196, 196)");
-    $("#actualGraph").css("background-color", "rgb(255, 255, 255)");
-    $("#compGraph").css("background-color", "rgb(255, 255, 255)");
-
-    var socket = io.connect('http://localhost:5000');
-    if ($('#idealAdvanced').is(":checked")){
-        socket.emit('mode', 1);
-    } else {
-        socket.emit('mode', 1);
-    }
-  });
+var socket1 = io.connect('http://localhost:5000');
 
 /*** Ideal Graph ***/
 
@@ -135,18 +123,16 @@ $( "#idealGraph" ).click(
     $("#actualGraph").css("background-color", "rgb(255, 255, 255)");
     $("#compGraph").css("background-color", "rgb(255, 255, 255)");
 
-    var socket = io.connect('http://localhost:5000');
     if ($('#idealAdvanced').is(":checked")){
-        socket.emit('mode', 1);
+        socket1.emit('mode', 1);
     } else {
-        socket.emit('mode', 3);
+        socket1.emit('mode', 3);
     }
   });
 
-$('#idealAdvanced').change(function(){
-  var socket = io.connect('http://localhost:5000');  
-  if($(this).is(':checked') && $("#idealGraph").css(background-color) == "rgb(255, 255, 255)"){
-    socket.emit('mode', 1);
+$('#idealAdvanced').change(function(){ 
+  if($(this).is(':checked') && $("#idealGraph").css("background-color") == "rgb(255, 255, 255)"){
+    socket1.emit('mode', 1);
   }
 });
 
@@ -158,18 +144,16 @@ $( "#actualGraph" ).click(
     $("#idealGraph").css("background-color", "rgb(255, 255, 255)");
     $("#compGraph").css("background-color", "rgb(255, 255, 255)");
 
-    var socket = io.connect('http://localhost:5000');
     if ($('#actualAdvanced').is(":checked")){
-        socket.emit('mode', 0);
+        socket1.emit('mode', 0);
     } else {
-        socket.emit('mode', 3);
+        socket1.emit('mode', 3);
     }
   });
 
-$('#actualAdvanced').change(function(){
-  var socket = io.connect('http://localhost:5000');  
-  if($(this).is(':checked') && $("#actualGraph").css(background-color) == "rgb(255, 255, 255)"){
-    socket.emit('mode', 0);
+$('#actualAdvanced').change(function(){ 
+  if($(this).is(':checked') && $("#actualGraph").css("background-color") == "rgb(255, 255, 255)"){
+    socket1.emit('mode', 0);
   }
 });
 
@@ -181,86 +165,15 @@ $( "#compGraph" ).click(
     $("#idealGraph").css("background-color", "rgb(255, 255, 255)");
     $("#actualGraph").css("background-color", "rgb(255, 255, 255)");
 
-    var socket = io.connect('http://localhost:5000');
     if ($('#compAdvanced').is(":checked")){
-        socket.emit('mode', 5);
+        socket1.emit('mode', 5);
     } else {
-        socket.emit('mode', 2);
+        socket1.emit('mode', 2);
     }
   });
 
-$('#compAdvanced').change(function(){
-  var socket = io.connect('http://localhost:5000');  
-  if($(this).is(':checked') && $("#compGraph").css(background-color) == "rgb(255, 255, 255)"){
-    socket.emit('mode', 5);
-  }
-});
-
-/*** Ideal Graph ***/
-
-$( "#idealGraph" ).click(
-  function() {
-    $( this ).css("background-color", "rgb(196, 196, 196)");
-    $("#actualGraph").css("background-color", "rgb(255, 255, 255)");
-    $("#compGraph").css("background-color", "rgb(255, 255, 255)");
-
-    var socket = io.connect('http://localhost:5000');
-    if ($('#idealAdvanced').is(":checked")){
-        socket.emit('mode', 1);
-    } else {
-        socket.emit('mode', 3);
-    }
-  });
-
-$('#idealAdvanced').change(function(){
-  var socket = io.connect('http://localhost:5000');  
-  if($(this).is(':checked') && $("#idealGraph").css(background-color) == "rgb(255, 255, 255)"){
-    socket.emit('mode', 1);
-  }
-});
-
-/*** Actual Graph ***/
-
-$( "#actualGraph" ).click(
-  function() {
-    $( this ).css("background-color", "rgb(196, 196, 196)");
-    $("#idealGraph").css("background-color", "rgb(255, 255, 255)");
-    $("#compGraph").css("background-color", "rgb(255, 255, 255)");
-
-    var socket = io.connect('http://localhost:5000');
-    if ($('#actualAdvanced').is(":checked")){
-        socket.emit('mode', 0);
-    } else {
-        socket.emit('mode', 3);
-    }
-  });
-
-$('#actualAdvanced').change(function(){
-  var socket = io.connect('http://localhost:5000');  
-  if($(this).is(':checked') && $("#actualGraph").css(background-color) == "rgb(255, 255, 255)"){
-    socket.emit('mode', 0);
-  }
-});
-
-/*** Comparison Graph ***/
-
-$( "#compGraph" ).click(
-  function() {
-    $( this ).css("background-color", "rgb(196, 196, 196)");
-    $("#idealGraph").css("background-color", "rgb(255, 255, 255)");
-    $("#actualGraph").css("background-color", "rgb(255, 255, 255)");
-
-    var socket = io.connect('http://localhost:5000');
-    if ($('#compAdvanced').is(":checked")){
-        socket.emit('mode', 5);
-    } else {
-        socket.emit('mode', 2);
-    }
-  });
-
-$('#compAdvanced').change(function(){
-  var socket = io.connect('http://localhost:5000');  
-  if($(this).is(':checked') && $("#compGraph").css(background-color) == "rgb(255, 255, 255)"){
-    socket.emit('mode', 5);
+$('#compAdvanced').change(function(){ 
+  if($(this).is(':checked') && $("#compGraph").css("background-color") == "rgb(255, 255, 255)"){
+    socket1.emit('mode', 5);
   }
 });
