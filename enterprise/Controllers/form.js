@@ -3,7 +3,7 @@
 angular.module('userForm', [])
     .controller('dataController', ['$scope', function($scope) {
       $scope.master = {};
-      $scope.budget = [20,30,50]; //food, necessaties, entertainment
+      $scope.budget = [30,30,30]; //food, necessaties, entertainment
       $scope.a = 1;
       $scope.update = function(user) {
         $scope.a = $scope.a + 1;
@@ -13,10 +13,10 @@ angular.module('userForm', [])
         console.log(user.entertainment);
         
         var budget2 = JSON.stringify({
-                          "f":user.total,
-                          "e":user.food,
+                          "f":user.food,
+                          "e":user.entertainment,
                           "n":user.necessities,
-                          "b":user.entertainment
+                          "b":user.total
                           });
             //localStorage.setItem("budget",budget);
             //console.log(budget);
