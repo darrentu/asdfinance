@@ -7,48 +7,40 @@ angular.module('userForm', [])
       var socket = io.connect('http://localhost:5000');
       socket.emit('nextday');
       socket.on('parsedmint', function (data) {
+
         $scope.category = data;
         $scope.totalSpentToday = data.f + data.e + data.n;
-        /*
-        $scope.food = Math.round((data.n/$scope.totalSpentToday)*100);
-        $scope.entertainment = Math.round((data.n/$scope.entertainment)*100);
-        $scope.necessities = Math.round((data.n/$scope.necessities)*100);*/
+        
+        $scope.food = Math.round((data.f/$scope.totalSpentToday)*100);
+        $scope.entertainment = Math.round((data.e/$scope.totalSpentToday)*100);
+        $scope.necessities = Math.round((data.n/$scope.totalSpentToday)*100);
+        console.log($scope.food);
+        console.log($scope.entertainment);
+        console.log($scope.necessities);
+        console.log($scope.totalSpentToday);
         console.log(data);
-    
-    });
-      
-      $scope.update = function(user) {
-        $scope.master = angular.copy(user);
-      };
 
-      $scope.reset = function() {
-        $scope.user = angular.copy($scope.master);
-      };
+        var ctxPie = document.getElementById("actualPie");
+        var actualPie = new Chart(ctxPie, {
+            type: 'pie',
+            data: {
 
-      $scope.reset();
-    }]);
+                labels: ["Food (%)", "Necessities (%)", "Entertainment (%)"],
 
-var ctxPie = document.getElementById("actualPie");
-    var actualPie = new Chart(ctxPie, {
-        type: 'pie',
-        data: {
-
-            labels: ["Food (%)", "Necessities (%)", "Entertainment (%)"],
-
-            datasets: [{
-                data: [30, 60, 10],
-            backgroundColor: [
-                "#c02dff",
-                "#f97b36",
-                "#368bf9"
-            ],
-            hoverBackgroundColor: [
-                "#c02dff",
-                "#f97b36",
-                "#368bf9"
-            ]}]
-        }
-    });
+                datasets: [{
+                    data: [$scope.food, $scope.necessities, $scope.entertainment],
+                backgroundColor: [
+                    "#c02dff",
+                    "#f97b36",
+                    "#368bf9"
+                ],
+                hoverBackgroundColor: [
+                    "#c02dff",
+                    "#f97b36",
+                    "#368bf9"
+                ]}]
+            }
+        });
 
 var ctxRadar = document.getElementById("compRadar");
     var compRadar = new Chart(ctxRadar, {
@@ -79,6 +71,22 @@ var ctxRadar = document.getElementById("compRadar");
             ]
         }
     });
+        
+    
+    });
+      
+      $scope.update = function(user) {
+        $scope.master = angular.copy(user);
+      };
+
+      $scope.reset = function() {
+        $scope.user = angular.copy($scope.master);
+      };
+
+      $scope.reset();
+    }]);
+
+
 
 $('#graphModal').on('shown.bs.modal', function () {
   $('#myInput').focus()
