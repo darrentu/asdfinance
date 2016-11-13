@@ -1,3 +1,8 @@
+<!--
+This is a button that you can press to go on the 'next day'. This is for the purpose of the demo. When this pushes into production, this entire 
+process will be automated. 
+-->
+
 <!doctype html>
 <html lang="en" ng-app="asdfinance"> <!---->
   <head>
@@ -10,7 +15,12 @@
   <body ng-controller="formController">
   <div class="container">
   <div class="row">
-  <button type="button" ng-click="sendData()">Next Day</button>
+  <br><br>
+  <div class="col-sm-6 col-sm-offset-6">
+  <button type="button" class="btn btn-outline-info" ng-click="sendData()">
+  Next Day
+  </button>
+  </div>
   </div>
 </div>
 </body>
@@ -28,37 +38,6 @@
   });
     }
   }]);
-  /*
-  $scope.phones = [
-    {
-      name: 'Nexus S',
-      snippet: 'Fast just got faster with Nexus S.'
-    }, {
-      name: 'Motorola XOOM™ with Wi-Fi',
-      snippet: 'The Next, Next Generation tablet.'
-    }, {
-      name: 'MOTOROLA XOOM™',
-      snippet: 'The Next, Next Generation tablet.'
-    }
-  ];*/
-  /*
-  $scope.a = "ttt";
-});
-  var budget = JSON.stringify({
-                          "f":20,
-                          "e":30,
-                          "n":50,
-                          "b":1000
-                          });
-  var socket = io.connect('http://localhost:5000');
-  socket.emit('nextday');
-  socket.on('parsedmint', function (data) {
-    console.log(data);
-  });*/
-  /*
-  socket.on('nextday', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-  });*/
+ 
 </script>
 </html>
