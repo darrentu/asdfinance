@@ -98,28 +98,31 @@ def chmd(md):
 					      uinp['b']*myout['d']//30)
 		for key in col4:
 			Corsair.SetLedsColors(CorsairLedColor(key, r, g, 0))
+
+		for key in whitecols:
+			Corsair.SetLedsColors(CorsairLedColor(key, 255, 255, 255))
 	elif mode == 1:
 		tot = (myout['f']+myout['e']+myout['n'])
 		if tot >= uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']):
 			for i in range(0, 12):
 				Corsair.SetLedsColors(
-					CorsairLedColor(row1[i], 255, 0, 0), 
+					[CorsairLedColor(row1[i], 255, 0, 0), 
 					CorsairLedColor(row2[i], 255, 0, 0), 
-					CorsairLedColor(row3[i], 255, 0, 0))
+					CorsairLedColor(row3[i], 255, 0, 0)])
 				time.sleep(.1)
 		else:
-			keys = tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']))
+			keys = int(tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n'])))
 			for i in range(0, keys+1):
 				Corsair.SetLedsColors(
-					CorsairLedColor(row1[i], 0, 255, 0), 
+					[CorsairLedColor(row1[i], 0, 255, 0), 
 					CorsairLedColor(row2[i], 0, 255, 0), 
-					CorsairLedColor(row3[i], 0, 255, 0))
+					CorsairLedColor(row3[i], 0, 255, 0)])
 				time.sleep(.1)
 			for i in range(keys+1, 12):
 				Corsair.SetLedsColors(
-					CorsairLedColor(row1[i], 255, 255, 255), 
+					[CorsairLedColor(row1[i], 255, 255, 255), 
 					CorsairLedColor(row2[i], 255, 255, 255), 
-					CorsairLedColor(row3[i], 255, 255, 255))
+					CorsairLedColor(row3[i], 255, 255, 255)])
 				time.sleep(.1)
 	elif mode == 2:
 		#total bar
@@ -129,7 +132,7 @@ def chmd(md):
 				Corsair.SetLedsColors(CorsairLedColor(row4[i], 255, 0, 0)) 
 				time.sleep(.1)
 		else:
-			keys = tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']))
+			keys = int(tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n'])))
 			for i in range(0, keys+1):
 				Corsair.SetLedsColors(CorsairLedColor(row4[i], 0, 255, 0))
 				time.sleep(.1)
@@ -139,7 +142,7 @@ def chmd(md):
 
 		#food
 		r, g = colorMaker(myout['f'], uinp['f']*uinp['b']*myout['d']//30)
-		keys = myout['f'] * 12 // (uinp['b']*uinp['f'])
+		keys = int(myout['f'] * 12 // (uinp['b']*uinp['f']))
 		if keys > 11:
 			for k in row1:
 				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
@@ -151,7 +154,7 @@ def chmd(md):
 
 		#ent
 		r, g = colorMaker(myout['e'], uinp['e']*uinp['b']*myout['d']//30)
-		keys = myout['e'] * 12 // (uinp['b']*uinp['e'])
+		keys = int(myout['e'] * 12 // (uinp['b']*uinp['e']))
 		if keys > 11:
 			for k in row2:
 				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
@@ -163,7 +166,7 @@ def chmd(md):
 
 		#nec
 		r, g = colorMaker(myout['n'], uinp['n']*uinp['b']*myout['d']//30)
-		keys = myout['n'] * 12 // (uinp['b']*uinp['n'])
+		keys = int(myout['n'] * 12 // (uinp['b']*uinp['n']))
 		if keys > 11:
 			for k in row3:
 				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
@@ -177,63 +180,63 @@ def chmd(md):
 		budget = uinpt['b']
 		if tot > uinpt['b']:
 			budget = tot
-		keys = myout['f'] * 12 // budget
-		keys2 = (myout['f']+myout['e']) * 12 // budget
-		keys3 = (myout['f']+myout['e']+myout['n']) * 12 // budget
+		keys = int(myout['f'] * 12 // budget)
+		keys2 = int((myout['f']+myout['e']) * 12 // budget)
+		keys3 = int((myout['f']+myout['e']+myout['n']) * 12 // budget)
 		for i in range(0, keys+1):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 192, 45, 255), 
+				[CorsairLedColor(row1[i], 192, 45, 255), 
 				CorsairLedColor(row2[i], 192, 45, 255), 
-				CorsairLedColor(row3[i], 192, 45, 255))
+				CorsairLedColor(row3[i], 192, 45, 255)])
 			time.sleep(.1)
 		for i in range(keys+1, keys2 + 1):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 54, 139, 249), 
+				[CorsairLedColor(row1[i], 54, 139, 249), 
 				CorsairLedColor(row2[i], 54, 139, 249), 
-				CorsairLedColor(row3[i], 54, 139, 249))
+				CorsairLedColor(row3[i], 54, 139, 249)])
 			time.sleep(.1)
 		for i in range(keys2+1, keys3 + 1):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 249, 123, 54), 
+				[CorsairLedColor(row1[i], 249, 123, 54), 
 				CorsairLedColor(row2[i], 249, 123, 54), 
-				CorsairLedColor(row3[i], 249, 123, 54))
+				CorsairLedColor(row3[i], 249, 123, 54)])
 			time.sleep(.1)
 		for i in range(keys3 + 1, 12):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 255, 255, 255), 
+				[CorsairLedColor(row1[i], 255, 255, 255), 
 				CorsairLedColor(row2[i], 255, 255, 255), 
-				CorsairLedColor(row3[i], 255, 255, 255))
+				CorsairLedColor(row3[i], 255, 255, 255)])
 	elif mode == 4:
 		tot = (uinpt['f']+uinpt['e']+uinpt['n'])*uinpt['b']
 		budget = 1
 		if tot > 1:
 			budget = tot
-		keys = uinpt['f'] * 12 // 1
-		keys2 = (uinpt['f']+uinpt['e']) * 12 // 1
-		keys3 = (uinpt['f']+uinpt['e']+uinpt['n']) * 12 // 1
+		keys = int(uinpt['f'] * 12 // 1)
+		keys2 = int((uinpt['f']+uinpt['e']) * 12 // 1)
+		keys3 = int((uinpt['f']+uinpt['e']+uinpt['n']) * 12 // 1)
 		for i in range(0, keys+1):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 168, 219, 17), 
+				[CorsairLedColor(row1[i], 168, 219, 17), 
 				CorsairLedColor(row2[i], 168, 219, 17), 
-				CorsairLedColor(row3[i], 168, 219, 17))
+				CorsairLedColor(row3[i], 168, 219, 17)])
 			time.sleep(.1)
 		for i in range(keys+1, keys2 + 1):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 17, 219, 172), 
+				[CorsairLedColor(row1[i], 17, 219, 172), 
 				CorsairLedColor(row2[i], 17, 219, 172), 
-				CorsairLedColor(row3[i], 17, 219, 172))
+				CorsairLedColor(row3[i], 17, 219, 172)])
 			time.sleep(.1)
 		for i in range(keys2+1, keys3 + 1):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 219, 64, 17), 
+				[CorsairLedColor(row1[i], 219, 64, 17), 
 				CorsairLedColor(row2[i], 219, 64, 17), 
-				CorsairLedColor(row3[i], 219, 64, 17))
+				CorsairLedColor(row3[i], 219, 64, 17)])
 			time.sleep(.1)
 		for i in range(keys3 + 1, 12):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 255, 255, 255), 
+				[CorsairLedColor(row1[i], 255, 255, 255), 
 				CorsairLedColor(row2[i], 255, 255, 255), 
-				CorsairLedColor(row3[i], 255, 255, 255))
+				CorsairLedColor(row3[i], 255, 255, 255)])
 	elif mode == 5:
 		#total bar
 		tot = (myout['f']+myout['e']+myout['n'])
@@ -242,7 +245,7 @@ def chmd(md):
 				Corsair.SetLedsColors(CorsairLedColor(row4[i], 255, 0, 0)) 
 				time.sleep(.1)
 		else:
-			keys = tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']))
+			keys = int(tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n'])))
 			for i in range(0, keys+1):
 				Corsair.SetLedsColors(CorsairLedColor(row4[i], 0, 255, 0))
 				time.sleep(.1)
@@ -252,7 +255,7 @@ def chmd(md):
 
 		#food
 		r, g, b = 192, 45, 255
-		keys = myout['f'] * 12 // (uinp['b']*uinp['f'])
+		keys = int(myout['f'] * 12 // (uinp['b']*uinp['f']))
 		if keys > 11:
 			for k in row1:
 				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
@@ -264,7 +267,7 @@ def chmd(md):
 
 		#ent
 		r, g, b = 54, 139, 249
-		keys = myout['e'] * 12 // (uinp['b']*uinp['e'])
+		keys = int(myout['e'] * 12 // (uinp['b']*uinp['e']))
 		if keys > 11:
 			for k in row2:
 				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
@@ -276,7 +279,7 @@ def chmd(md):
 
 		#nec
 		r, g, b = 219, 123, 54
-		keys = myout['n'] * 12 // (uinp['b']*uinp['n'])
+		keys = int(myout['n'] * 12 // (uinp['b']*uinp['n']))
 		if keys > 11:
 			for k in row3:
 				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
@@ -324,7 +327,6 @@ def nextDay():
 	socketio.emit('parsedmint', myout)
 	myout['d'] += 1
 
-
 	Corsair = CUESDK("CUESDK.x64_2015.dll")
 	Corsair.RequestControl(CAM.ExclusiveLightingControl)
 	if mode == 0:
@@ -353,23 +355,23 @@ def nextDay():
 		if tot >= uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']):
 			for i in range(0, 12):
 				Corsair.SetLedsColors(
-					CorsairLedColor(row1[i], 255, 0, 0), 
+					[CorsairLedColor(row1[i], 255, 0, 0), 
 					CorsairLedColor(row2[i], 255, 0, 0), 
-					CorsairLedColor(row3[i], 255, 0, 0))
+					CorsairLedColor(row3[i], 255, 0, 0)])
 				time.sleep(.1)
 		else:
-			keys = tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']))
+			keys = int(tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n'])))
 			for i in range(0, keys+1):
 				Corsair.SetLedsColors(
-					CorsairLedColor(row1[i], 0, 255, 0), 
+					[CorsairLedColor(row1[i], 0, 255, 0), 
 					CorsairLedColor(row2[i], 0, 255, 0), 
-					CorsairLedColor(row3[i], 0, 255, 0))
+					CorsairLedColor(row3[i], 0, 255, 0)])
 				time.sleep(.1)
 			for i in range(keys+1, 12):
 				Corsair.SetLedsColors(
-					CorsairLedColor(row1[i], 255, 255, 255), 
+					[CorsairLedColor(row1[i], 255, 255, 255), 
 					CorsairLedColor(row2[i], 255, 255, 255), 
-					CorsairLedColor(row3[i], 255, 255, 255))
+					CorsairLedColor(row3[i], 255, 255, 255)])
 				time.sleep(.1)
 	elif mode == 2:
 		#total bar
@@ -379,7 +381,7 @@ def nextDay():
 				Corsair.SetLedsColors(CorsairLedColor(row4[i], 255, 0, 0)) 
 				time.sleep(.1)
 		else:
-			keys = tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']))
+			keys = int(tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n'])))
 			for i in range(0, keys+1):
 				Corsair.SetLedsColors(CorsairLedColor(row4[i], 0, 255, 0))
 				time.sleep(.1)
@@ -389,7 +391,7 @@ def nextDay():
 
 		#food
 		r, g = colorMaker(myout['f'], uinp['f']*uinp['b']*myout['d']//30)
-		keys = myout['f'] * 12 // (uinp['b']*uinp['f'])
+		keys = int(myout['f'] * 12 // (uinp['b']*uinp['f']))
 		if keys > 11:
 			for k in row1:
 				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
@@ -401,7 +403,7 @@ def nextDay():
 
 		#ent
 		r, g = colorMaker(myout['e'], uinp['e']*uinp['b']*myout['d']//30)
-		keys = myout['e'] * 12 // (uinp['b']*uinp['e'])
+		keys = int(myout['e'] * 12 // (uinp['b']*uinp['e']))
 		if keys > 11:
 			for k in row2:
 				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
@@ -413,7 +415,7 @@ def nextDay():
 
 		#nec
 		r, g = colorMaker(myout['n'], uinp['n']*uinp['b']*myout['d']//30)
-		keys = myout['n'] * 12 // (uinp['b']*uinp['n'])
+		keys = int(myout['n'] * 12 // (uinp['b']*uinp['n']))
 		if keys > 11:
 			for k in row3:
 				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
@@ -427,63 +429,63 @@ def nextDay():
 		budget = uinpt['b']
 		if tot > uinpt['b']:
 			budget = tot
-		keys = myout['f'] * 12 // budget
-		keys2 = (myout['f']+myout['e']) * 12 // budget
-		keys3 = (myout['f']+myout['e']+myout['n']) * 12 // budget
+		keys = int(myout['f'] * 12 // budget)
+		keys2 = int((myout['f']+myout['e']) * 12 // budget)
+		keys3 = int((myout['f']+myout['e']+myout['n']) * 12 // budget)
 		for i in range(0, keys+1):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 192, 45, 255), 
+				[CorsairLedColor(row1[i], 192, 45, 255), 
 				CorsairLedColor(row2[i], 192, 45, 255), 
-				CorsairLedColor(row3[i], 192, 45, 255))
+				CorsairLedColor(row3[i], 192, 45, 255)])
 			time.sleep(.1)
 		for i in range(keys+1, keys2 + 1):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 54, 139, 249), 
+				[CorsairLedColor(row1[i], 54, 139, 249), 
 				CorsairLedColor(row2[i], 54, 139, 249), 
-				CorsairLedColor(row3[i], 54, 139, 249))
+				CorsairLedColor(row3[i], 54, 139, 249)])
 			time.sleep(.1)
 		for i in range(keys2+1, keys3 + 1):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 249, 123, 54), 
+				[CorsairLedColor(row1[i], 249, 123, 54), 
 				CorsairLedColor(row2[i], 249, 123, 54), 
-				CorsairLedColor(row3[i], 249, 123, 54))
+				CorsairLedColor(row3[i], 249, 123, 54)])
 			time.sleep(.1)
 		for i in range(keys3 + 1, 12):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 255, 255, 255), 
+				[CorsairLedColor(row1[i], 255, 255, 255), 
 				CorsairLedColor(row2[i], 255, 255, 255), 
-				CorsairLedColor(row3[i], 255, 255, 255))
+				CorsairLedColor(row3[i], 255, 255, 255)])
 	elif mode == 4:
 		tot = (uinpt['f']+uinpt['e']+uinpt['n'])*uinpt['b']
 		budget = 1
 		if tot > 1:
 			budget = tot
-		keys = uinpt['f'] * 12 // 1
-		keys2 = (uinpt['f']+uinpt['e']) * 12 // 1
-		keys3 = (uinpt['f']+uinpt['e']+uinpt['n']) * 12 // 1
+		keys = int(uinpt['f'] * 12 // 1)
+		keys2 = int((uinpt['f']+uinpt['e']) * 12 // 1)
+		keys3 = int((uinpt['f']+uinpt['e']+uinpt['n']) * 12 // 1)
 		for i in range(0, keys+1):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 168, 219, 17), 
+				[CorsairLedColor(row1[i], 168, 219, 17), 
 				CorsairLedColor(row2[i], 168, 219, 17), 
-				CorsairLedColor(row3[i], 168, 219, 17))
+				CorsairLedColor(row3[i], 168, 219, 17)])
 			time.sleep(.1)
 		for i in range(keys+1, keys2 + 1):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 17, 219, 172), 
+				[CorsairLedColor(row1[i], 17, 219, 172), 
 				CorsairLedColor(row2[i], 17, 219, 172), 
-				CorsairLedColor(row3[i], 17, 219, 172))
+				CorsairLedColor(row3[i], 17, 219, 172)])
 			time.sleep(.1)
 		for i in range(keys2+1, keys3 + 1):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 219, 64, 17), 
+				[CorsairLedColor(row1[i], 219, 64, 17), 
 				CorsairLedColor(row2[i], 219, 64, 17), 
-				CorsairLedColor(row3[i], 219, 64, 17))
+				CorsairLedColor(row3[i], 219, 64, 17)])
 			time.sleep(.1)
 		for i in range(keys3 + 1, 12):
 			Corsair.SetLedsColors(
-				CorsairLedColor(row1[i], 255, 255, 255), 
+				[CorsairLedColor(row1[i], 255, 255, 255), 
 				CorsairLedColor(row2[i], 255, 255, 255), 
-				CorsairLedColor(row3[i], 255, 255, 255))
+				CorsairLedColor(row3[i], 255, 255, 255)])
 	elif mode == 5:
 		#total bar
 		tot = (myout['f']+myout['e']+myout['n'])
@@ -492,7 +494,7 @@ def nextDay():
 				Corsair.SetLedsColors(CorsairLedColor(row4[i], 255, 0, 0)) 
 				time.sleep(.1)
 		else:
-			keys = tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']))
+			keys = int(tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n'])))
 			for i in range(0, keys+1):
 				Corsair.SetLedsColors(CorsairLedColor(row4[i], 0, 255, 0))
 				time.sleep(.1)
@@ -502,7 +504,7 @@ def nextDay():
 
 		#food
 		r, g, b = 192, 45, 255
-		keys = myout['f'] * 12 // (uinp['b']*uinp['f'])
+		keys = int(myout['f'] * 12 // (uinp['b']*uinp['f']))
 		if keys > 11:
 			for k in row1:
 				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
@@ -514,7 +516,7 @@ def nextDay():
 
 		#ent
 		r, g, b = 54, 139, 249
-		keys = myout['e'] * 12 // (uinp['b']*uinp['e'])
+		keys = int(myout['e'] * 12 // (uinp['b']*uinp['e']))
 		if keys > 11:
 			for k in row2:
 				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
@@ -526,7 +528,7 @@ def nextDay():
 
 		#nec
 		r, g, b = 219, 123, 54
-		keys = myout['n'] * 12 // (uinp['b']*uinp['n'])
+		keys = int(myout['n'] * 12 // (uinp['b']*uinp['n']))
 		if keys > 11:
 			for k in row3:
 				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
