@@ -11,7 +11,7 @@ from cue_sdk import *
 
 
 foods = ["Restaurant", "Fast Food", "Alcohol & Bars",]
-ents = ["Travel", "Shopping", "Entertainment", "Electronics & Software"]
+ents = ["Shopping", "Entertainment", "Electronics & Software"] #"Travel", 
 necs = ["Groceries", "Home Improvement"]
 food = []
 ent = []
