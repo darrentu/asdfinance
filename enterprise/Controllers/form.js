@@ -13,14 +13,17 @@ angular.module('userForm', [])
                           "n":user.necessities,
                           "b":user.entertainment
                           });
+        localStorage.setItem("budget",budget);
         console.log(budget);
-        socket.emit('userinput',budget)
+        socket.emit('userinput',budget);
         
         
       };
 
       $scope.reset = function() {
-        $scope.user = angular.copy($scope.master);
+        //$scope.user = angular.copy($scope.master);
+
+        //console.log(JSON.parse(localStorage.getItem('budget')));
       };
 
       $scope.reset();
@@ -34,7 +37,13 @@ angular.module('userForm', [])
         $scope.food = Math.round((data.n/$scope.totalSpentToday)*100);         
         $scope.entertainment = Math.round((data.n/$scope.totalSpentToday)*100);      
         $scope.necessities = Math.round((data.n/$scope.totalSpentToday)*100);  
-        console.log($scope.food);      
+        console.log($scope.food);     
+        if (localStorage.getItem('budget') !== null) {
+            budget = JSON.parse(localStorage.getItem('budget'));
+        } else {
+            budget = {"f":33,"e":33,"n":33,"b":1000};
+        }
+        
          /*
         console.log($scope.food);
         console.log($scope.entertainment);
@@ -50,7 +59,7 @@ angular.module('userForm', [])
                     labels: ["Food (%)", "Necessities (%)", "Entertainment (%)"],
 
                     datasets: [{
-                        data: [30, 60, 10],
+                        data: [budget.f, budget.n, budget.e],
                     backgroundColor: [
                         "#c02dff",
                         "#f97b36",
@@ -100,7 +109,7 @@ angular.module('userForm', [])
                             pointBorderColor: "#fff",
                             pointHoverBackgroundColor: "#fff",
                             pointHoverBorderColor: "rgba(16, 204, 78,1)",
-                            data: [30, 60, 10]
+                            data: [budget.f, budget.n, budget.e]
                         },
                         {
                             label: "Actual Percentage (%)",
