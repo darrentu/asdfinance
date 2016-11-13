@@ -21,10 +21,11 @@ ekeys = []
 nkeys = []
 mode = 0
 
-col1 = [1, 2, 3, 4, 14, 15, 16, 17, 26, 27, 28, 29, 38, 39, 40, 41, 49, 51, 52, 53]
+col1 = [5, 2, 3, 4, 14, 15, 16, 17, 26, 27, 28, 29, 38, 39, 40, 41, 49, 51, 52, 53]
 col2 = [6, 7, 8, 9, 19, 20, 21, 22, 31, 32, 33, 34, 43, 44, 45, 46, 55, 56, 57, 58]
 col3 = [10, 11, 12, 73, 24, 85, 87, 36, 80, 81, 48, 83, 60, 91]
 col4 = range(103, 121)
+whitecols = [18, 30, 42, 54, 23, 35, 47, 59]
 
 row1 = range(25, 37)
 row2 = range(37, 49)
@@ -61,7 +62,7 @@ def colorMaker(actual, ideal):
 		a = 255//g
 	r *= a
 	g *= a
-	return (r, g)
+	return (int(r), int(g))
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -344,6 +345,9 @@ def nextDay():
 					      uinp['b']*myout['d']//30)
 		for key in col4:
 			Corsair.SetLedsColors(CorsairLedColor(key, r, g, 0))
+
+		for key in whitecols:
+			Corsair.SetLedsColors(CorsairLedColor(key, 255, 255, 255))
 	elif mode == 1:
 		tot = (myout['f']+myout['e']+myout['n'])
 		if tot >= uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']):
