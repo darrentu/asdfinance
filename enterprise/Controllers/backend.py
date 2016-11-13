@@ -72,6 +72,9 @@ socketio = SocketIO(app)
 def receive(userinput):
 	global uinp
 	uinp = json.decode(userinput)
+	uinp['f'] /= 100
+	uinp['e'] /= 100
+	uinp['n'] /= 100
 
 @socketio.on('mode')
 def chmd(md):
