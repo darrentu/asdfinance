@@ -30,7 +30,7 @@ whitecols = [18, 30, 42, 54, 23, 35, 47, 59]
 row1 = range(25, 37)
 row2 = range(37, 49)
 row3 = range(49, 61)
-row4 = range(14, 25).append(85)
+row4 = range(14, 25)+[85]
 
 
 mint =  json.load(urllib2.urlopen("http://intuit-mint.herokuapp.com/api/v1/user/transactions"))
@@ -71,7 +71,7 @@ socketio = SocketIO(app)
 @socketio.on('userinput')
 def receive(userinput):
 	global uinp
-    uinp = json.decode(userinput)
+	uinp = json.decode(userinput)
 
 @socketio.on('mode')
 def chmd(md):
