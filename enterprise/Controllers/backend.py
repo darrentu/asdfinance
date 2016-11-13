@@ -71,12 +71,11 @@ socketio = SocketIO(app)
 @socketio.on('userinput')
 def receive(userinput):
 	global uinp
-	print userinput
 	uinp = json.loads(userinput)
-	uinp['f'] /= float(100)
-	uinp['e'] /= float(100)
-	uinp['n'] /= float(100)
-	print uinp
+	uinp['f'] = int(uinp['f'])/float(100)
+	uinp['e'] = int(uinp['e'])/float(100)
+	uinp['n'] = int(uinp['n'])/float(100)
+	uinp['b'] = int(uinp['b'])
 
 @socketio.on('mode')
 def chmd(md):
