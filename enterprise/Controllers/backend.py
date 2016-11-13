@@ -6,7 +6,7 @@ from flask_socketio import SocketIO
 
 #cue support
 from cue_sdk import *
-Corsair = CUESDK("CUESDK.x64_2013.dll")
+Corsair = CUESDK("CUESDK.x64_2015.dll")
 Corsair.RequestControl(CAM.ExclusiveLightingControl)
 
 foods = ["Restaurant", "Fast Food", "Alcohol & Bars",]
@@ -18,7 +18,10 @@ nec = []
 fkeys = []
 ekeys = []
 nkeys = []
-
+col1 = [1, 2, 3, 4, 14, 15, 16, 17, 26, 27, 28, 29, 38, 39, 40, 41, 49, 51, 52, 53]
+col2 = [6, 7, 8, 9, 19, 20, 21, 22, 31, 32, 33, 34, 43, 44, 45, 46, 55, 56, 57, 58]
+col3 = [10, 11, 12, 73, 24, 85, 87, 36, 80, 81, 48, 83, 60, 91]
+col4 = range(103, 121)
 
 mint =  json.load(urllib2.urlopen("http://intuit-mint.herokuapp.com/api/v1/user/transactions"))
 l = len(mint)//30
@@ -40,7 +43,16 @@ myout = {
 
 def colorMaker(actual, ideal):
 	tot = actual+ideal
-	return ((255*actual)//tot, (255*ideal)//tot, 0)
+	r = (255*actual)//tot
+	g = (255*ideal)//tot
+	a = 0
+	if r > g:
+		a = 255//r
+	else 
+		a = 255//g
+	r *= a
+	g *= a
+	return (r, g)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -60,6 +72,10 @@ def nextDay():
 	global food
 	global ent
 	global nec
+	global col1
+	global col2
+	global col3
+	global col4
 
 	if myout['d'] > 30:
 		myout['d'] = 0
@@ -80,6 +96,24 @@ def nextDay():
 
 	socketio.emit('parsedmint', myout)
 	myout['d'] += 1
+
+	r, g = colorMaker(myout['f'], uinp['f']*uinp['b']*myout['d']//30)
+	for key in col1:
+		Corsair.SetLedsColors(CorsairLedColor(key, r, g, 0))
+
+	r, g = colorMaker(myout['e'], uinp['e']*uinp['b']*myout['d']//30)
+	for key in col2:
+		Corsair.SetLedsColors(CorsairLedColor(key, r, g, 0))
+
+	r, g = colorMaker(myout['n'], uinp['n']*uinp['b']*myout['d']//30)
+	for key in col3:
+		Corsair.SetLedsColors(CorsairLedColor(key, r, g, 0))
+
+	r, g = colorMaker(myout['f'] + myout['e'] + myout['n'], 
+					  (1 - uinp['f'] - uinp['e'] - uinp['n']) * 
+				      uinp['b']*myout['d']//30)
+	for key in col4:
+		Corsair.SetLedsColors(CorsairLedColor(key, r, g, 0))
 
 if __name__ == '__main__':
     socketio.run(app)
