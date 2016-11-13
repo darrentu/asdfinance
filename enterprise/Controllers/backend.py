@@ -38,8 +38,8 @@ l = len(mint)//30
 
 #userinput and my ouput
 uinp = {
-	'f': 0.2,
-	'e': 0.2,
+	'f': 0.3,
+	'e': 0.3,
 	'n': 0.3,
 	'b': 1000
 }
