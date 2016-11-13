@@ -18,7 +18,7 @@ nec = []
 fkeys = []
 ekeys = []
 nkeys = []
-
+i = 0
 
 mint =  json.load(urllib2.urlopen("http://intuit-mint.herokuapp.com/api/v1/user/transactions"))
 l = len(mint)//30
@@ -80,7 +80,6 @@ def nextDay():
 		elif t['category'] in necs:
 			nec.append((-1*t['amount'], t['name']))
 			myout['n']+=-1*t['amount']
-
 
 	socketio.emit('parsedmint', myout)
 	i += 1

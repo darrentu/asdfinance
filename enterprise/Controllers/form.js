@@ -3,11 +3,22 @@
 angular.module('userForm', [])
     .controller('dataController', ['$scope', function($scope) {
       $scope.master = {};
-
+      
+      var socket = io.connect('http://localhost:5000');
+      socket.emit('nextday');
+      socket.on('parsedmint', function (data) {
+        $scope.category = data;
+        $scope.totalSpentToday = data.f + data.e + data.n;
+        /*
+        $scope.food = Math.round((data.n/$scope.totalSpentToday)*100);
+        $scope.entertainment = Math.round((data.n/$scope.entertainment)*100);
+        $scope.necessities = Math.round((data.n/$scope.necessities)*100);*/
+        console.log(data);
+    
+    });
+      
       $scope.update = function(user) {
         $scope.master = angular.copy(user);
-
-
       };
 
       $scope.reset = function() {
@@ -21,7 +32,9 @@ var ctxPie = document.getElementById("actualPie");
     var actualPie = new Chart(ctxPie, {
         type: 'pie',
         data: {
+
             labels: ["Food (%)", "Necessities (%)", "Entertainment (%)"],
+
             datasets: [{
                 data: [30, 60, 10],
             backgroundColor: [
