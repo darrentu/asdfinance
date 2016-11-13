@@ -76,256 +76,10 @@ def receive(userinput):
 @socketio.on('mode')
 def chmd(md):
 	global mode
-	mode = md
-
-	Corsair = CUESDK("CUESDK.x64_2015.dll")
-	Corsair.RequestControl(CAM.ExclusiveLightingControl)
-	if mode == 0:
-		r, g = colorMaker(myout['f'], uinp['f']*uinp['b']*myout['d']//30)
-		for key in col1:
-			Corsair.SetLedsColors(CorsairLedColor(key, r, g, 0))
-
-		r, g = colorMaker(myout['e'], uinp['e']*uinp['b']*myout['d']//30)
-		for key in col2:
-			Corsair.SetLedsColors(CorsairLedColor(key, r, g, 0))
-
-		r, g = colorMaker(myout['n'], uinp['n']*uinp['b']*myout['d']//30)
-		for key in col3:
-			Corsair.SetLedsColors(CorsairLedColor(key, r, g, 0))
-
-		r, g = colorMaker(myout['f'] + myout['e'] + myout['n'], 
-						  (1 - uinp['f'] - uinp['e'] - uinp['n']) * 
-					      uinp['b']*myout['d']//30)
-		for key in col4:
-			Corsair.SetLedsColors(CorsairLedColor(key, r, g, 0))
-
-		for key in whitecols:
-			Corsair.SetLedsColors(CorsairLedColor(key, 255, 255, 255))
-	elif mode == 1:
-		tot = (myout['f']+myout['e']+myout['n'])
-		if tot >= uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']):
-			for i in range(0, 12):
-				Corsair.SetLedsColors(
-					[CorsairLedColor(row1[i], 255, 0, 0), 
-					CorsairLedColor(row2[i], 255, 0, 0), 
-					CorsairLedColor(row3[i], 255, 0, 0)])
-				time.sleep(.1)
-		else:
-			keys = int(tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n'])))
-			for i in range(0, keys+1):
-				Corsair.SetLedsColors(
-					[CorsairLedColor(row1[i], 0, 255, 0), 
-					CorsairLedColor(row2[i], 0, 255, 0), 
-					CorsairLedColor(row3[i], 0, 255, 0)])
-				time.sleep(.1)
-			for i in range(keys+1, 12):
-				Corsair.SetLedsColors(
-					[CorsairLedColor(row1[i], 255, 255, 255), 
-					CorsairLedColor(row2[i], 255, 255, 255), 
-					CorsairLedColor(row3[i], 255, 255, 255)])
-				time.sleep(.1)
-	elif mode == 2:
-		#total bar
-		tot = (myout['f']+myout['e']+myout['n'])
-		if tot >= uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']):
-			for i in range(0, 12):
-				Corsair.SetLedsColors(CorsairLedColor(row4[i], 255, 0, 0)) 
-				time.sleep(.1)
-		else:
-			keys = int(tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n'])))
-			for i in range(0, keys+1):
-				Corsair.SetLedsColors(CorsairLedColor(row4[i], 0, 255, 0))
-				time.sleep(.1)
-			for i in range(keys+1, 12):
-				Corsair.SetLedsColors(CorsairLedColor(row4[i], 255, 255, 255))
-				time.sleep(.1)
-
-		#food
-		r, g = colorMaker(myout['f'], uinp['f']*uinp['b']*myout['d']//30)
-		keys = int(myout['f'] * 12 // (uinp['b']*uinp['f']))
-		if keys > 11:
-			for k in row1:
-				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
-		else:
-			for i in range(0, keys+1):
-				Corsair.SetLedsColors(CorsairLedColor(row1[key], r, g, 0))
-			for i in range(keys+1, 12):
-				Corsair.SetLedsColors(CorsairLedColor(row1[key], 255, 255, 255))
-
-		#ent
-		r, g = colorMaker(myout['e'], uinp['e']*uinp['b']*myout['d']//30)
-		keys = int(myout['e'] * 12 // (uinp['b']*uinp['e']))
-		if keys > 11:
-			for k in row2:
-				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
-		else:
-			for i in range(0, keys+1):
-				Corsair.SetLedsColors(CorsairLedColor(row2[key], r, g, 0))
-			for i in range(keys+1, 12):
-				Corsair.SetLedsColors(CorsairLedColor(row2[key], 255, 255, 255))
-
-		#nec
-		r, g = colorMaker(myout['n'], uinp['n']*uinp['b']*myout['d']//30)
-		keys = int(myout['n'] * 12 // (uinp['b']*uinp['n']))
-		if keys > 11:
-			for k in row3:
-				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
-		else:
-			for i in range(0, keys+1):
-				Corsair.SetLedsColors(CorsairLedColor(row3[key], r, g, 0))
-			for i in range(keys+1, 12):
-				Corsair.SetLedsColors(CorsairLedColor(row3[key], 255, 255, 255))
-	elif mode == 3:
-		tot = (myout['f']+myout['e']+myout['n'])
-		budget = uinp['b']
-		if tot > uinp['b']:
-			budget = tot
-		keys = int(myout['f'] * 12 // budget)
-		keys2 = int((myout['f']+myout['e']) * 12 // budget)
-		keys3 = int((myout['f']+myout['e']+myout['n']) * 12 // budget)
-		for i in range(0, keys+1):
-			Corsair.SetLedsColors(
-				[CorsairLedColor(row1[i], 192, 45, 255), 
-				CorsairLedColor(row2[i], 192, 45, 255), 
-				CorsairLedColor(row3[i], 192, 45, 255)])
-			time.sleep(.1)
-		for i in range(keys+1, keys2 + 1):
-			Corsair.SetLedsColors(
-				[CorsairLedColor(row1[i], 54, 139, 249), 
-				CorsairLedColor(row2[i], 54, 139, 249), 
-				CorsairLedColor(row3[i], 54, 139, 249)])
-			time.sleep(.1)
-		for i in range(keys2+1, keys3 + 1):
-			Corsair.SetLedsColors(
-				[CorsairLedColor(row1[i], 249, 123, 54), 
-				CorsairLedColor(row2[i], 249, 123, 54), 
-				CorsairLedColor(row3[i], 249, 123, 54)])
-			time.sleep(.1)
-		for i in range(keys3 + 1, 12):
-			Corsair.SetLedsColors(
-				[CorsairLedColor(row1[i], 255, 255, 255), 
-				CorsairLedColor(row2[i], 255, 255, 255), 
-				CorsairLedColor(row3[i], 255, 255, 255)])
-	elif mode == 4:
-		tot = (uinp['f']+uinp['e']+uinp['n'])*uinp['b']
-		budget = 1
-		if tot > 1:
-			budget = tot
-		keys = int(uinp['f'] * 12 // 1)
-		keys2 = int((uinp['f']+uinp['e']) * 12 // 1)
-		keys3 = int((uinp['f']+uinp['e']+uinp['n']) * 12 // 1)
-		for i in range(0, keys+1):
-			Corsair.SetLedsColors(
-				[CorsairLedColor(row1[i], 168, 219, 17), 
-				CorsairLedColor(row2[i], 168, 219, 17), 
-				CorsairLedColor(row3[i], 168, 219, 17)])
-			time.sleep(.1)
-		for i in range(keys+1, keys2 + 1):
-			Corsair.SetLedsColors(
-				[CorsairLedColor(row1[i], 17, 219, 172), 
-				CorsairLedColor(row2[i], 17, 219, 172), 
-				CorsairLedColor(row3[i], 17, 219, 172)])
-			time.sleep(.1)
-		for i in range(keys2+1, keys3 + 1):
-			Corsair.SetLedsColors(
-				[CorsairLedColor(row1[i], 219, 64, 17), 
-				CorsairLedColor(row2[i], 219, 64, 17), 
-				CorsairLedColor(row3[i], 219, 64, 17)])
-			time.sleep(.1)
-		for i in range(keys3 + 1, 12):
-			Corsair.SetLedsColors(
-				[CorsairLedColor(row1[i], 255, 255, 255), 
-				CorsairLedColor(row2[i], 255, 255, 255), 
-				CorsairLedColor(row3[i], 255, 255, 255)])
-	elif mode == 5:
-		#total bar
-		tot = (myout['f']+myout['e']+myout['n'])
-		if tot >= uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']):
-			for i in range(0, 12):
-				Corsair.SetLedsColors(CorsairLedColor(row4[i], 255, 0, 0)) 
-				time.sleep(.1)
-		else:
-			keys = int(tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n'])))
-			for i in range(0, keys+1):
-				Corsair.SetLedsColors(CorsairLedColor(row4[i], 0, 255, 0))
-				time.sleep(.1)
-			for i in range(keys+1, 12):
-				Corsair.SetLedsColors(CorsairLedColor(row4[i], 255, 255, 255))
-				time.sleep(.1)
-
-		#food
-		r, g, b = 192, 45, 255
-		keys = int(myout['f'] * 12 // (uinp['b']*uinp['f']))
-		if keys > 11:
-			for k in row1:
-				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
-		else:
-			for i in range(0, keys+1):
-				Corsair.SetLedsColors(CorsairLedColor(row1[key], r, g, b))
-			for i in range(keys+1, 12):
-				Corsair.SetLedsColors(CorsairLedColor(row1[key], 255, 255, 255))
-
-		#ent
-		r, g, b = 54, 139, 249
-		keys = int(myout['e'] * 12 // (uinp['b']*uinp['e']))
-		if keys > 11:
-			for k in row2:
-				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
-		else:
-			for i in range(0, keys+1):
-				Corsair.SetLedsColors(CorsairLedColor(row2[key], r, g, b))
-			for i in range(keys+1, 12):
-				Corsair.SetLedsColors(CorsairLedColor(row2[key], 255, 255, 255))
-
-		#nec
-		r, g, b = 219, 123, 54
-		keys = int(myout['n'] * 12 // (uinp['b']*uinp['n']))
-		if keys > 11:
-			for k in row3:
-				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
-		else:
-			for i in range(0, keys+1):
-				Corsair.SetLedsColors(CorsairLedColor(row3[key], r, g, b))
-			for i in range(keys+1, 12):
-				Corsair.SetLedsColors(CorsairLedColor(row3[key], 255, 255, 255))
-
-
-@socketio.on('nextday')
-def nextDay():
 	global uinp
 	global myout
-	global mint
-	global l
-	global food
-	global ent
-	global nec
-	global col1
-	global col2
-	global col3
-	global col4
 
-	if myout['d'] > 30:
-		myout['d'] = 0
-		mint =  json.load(urllib2.urlopen("http://intuit-mint.herokuapp.com/api/v1/user/transactions"))
-		l = len(mint)//30
-		myout['f'] = 0
-		myout['e'] = 0
-		myout['n'] = 0
-
-	for k in range(l*myout['d'], l*(myout['d']+1)):
-		t = mint[k]
-		if t['category'] in foods:
-			food.append((-1*t['amount'], t['name']))
-			myout['f']+=-1*t['amount']
-		elif t['category'] in ents:
-			ent.append((-1*t['amount'], t['name']))
-			myout['e']+=-1*t['amount']
-		elif t['category'] in necs:
-			nec.append((-1*t['amount'], t['name']))
-			myout['n']+=-1*t['amount']
-
-	socketio.emit('parsedmint', myout)
-	myout['d'] += 1
+	mode = md
 
 	Corsair = CUESDK("CUESDK.x64_2015.dll")
 	Corsair.RequestControl(CAM.ExclusiveLightingControl)
@@ -480,6 +234,256 @@ def nextDay():
 				[CorsairLedColor(row1[i], 219, 64, 17), 
 				CorsairLedColor(row2[i], 219, 64, 17), 
 				CorsairLedColor(row3[i], 219, 64, 17)])
+			time.sleep(.1)
+		for i in range(keys3 + 1, 12):
+			Corsair.SetLedsColors(
+				[CorsairLedColor(row1[i], 255, 255, 255), 
+				CorsairLedColor(row2[i], 255, 255, 255), 
+				CorsairLedColor(row3[i], 255, 255, 255)])
+	elif mode == 5:
+		#total bar
+		tot = (myout['f']+myout['e']+myout['n'])
+		if tot >= uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']):
+			for i in range(0, 12):
+				Corsair.SetLedsColors(CorsairLedColor(row4[i], 255, 0, 0)) 
+				time.sleep(.1)
+		else:
+			keys = int(tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n'])))
+			for i in range(0, keys+1):
+				Corsair.SetLedsColors(CorsairLedColor(row4[i], 0, 255, 0))
+				time.sleep(.1)
+			for i in range(keys+1, 12):
+				Corsair.SetLedsColors(CorsairLedColor(row4[i], 255, 255, 255))
+				time.sleep(.1)
+
+		#food
+		r, g, b = 192, 45, 255
+		keys = int(myout['f'] * 12 // (uinp['b']*uinp['f']))
+		if keys > 11:
+			for k in row1:
+				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
+		else:
+			for i in range(0, keys+1):
+				Corsair.SetLedsColors(CorsairLedColor(row1[i], r, g, b))
+			for i in range(keys+1, 12):
+				Corsair.SetLedsColors(CorsairLedColor(row1[i], 255, 255, 255))
+
+		#ent
+		r, g, b = 54, 139, 249
+		keys = int(myout['e'] * 12 // (uinp['b']*uinp['e']))
+		if keys > 11:
+			for k in row2:
+				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
+		else:
+			for i in range(0, keys+1):
+				Corsair.SetLedsColors(CorsairLedColor(row2[i], r, g, b))
+			for i in range(keys+1, 12):
+				Corsair.SetLedsColors(CorsairLedColor(row2[i], 255, 255, 255))
+
+		#nec
+		r, g, b = 219, 123, 54
+		keys = int(myout['n'] * 12 // (uinp['b']*uinp['n']))
+		if keys > 11:
+			for k in row3:
+				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
+		else:
+			for i in range(0, keys+1):
+				Corsair.SetLedsColors(CorsairLedColor(row3[i], r, g, b))
+			for i in range(keys+1, 12):
+				Corsair.SetLedsColors(CorsairLedColor(row3[i], 255, 255, 255))
+
+
+@socketio.on('nextday')
+def nextDay():
+	global uinp
+	global myout
+	global mint
+	global l
+	global food
+	global ent
+	global nec
+	global col1
+	global col2
+	global col3
+	global col4
+
+	if myout['d'] > 30:
+		myout['d'] = 0
+		mint =  json.load(urllib2.urlopen("http://intuit-mint.herokuapp.com/api/v1/user/transactions"))
+		l = len(mint)//30
+		myout['f'] = 0
+		myout['e'] = 0
+		myout['n'] = 0
+
+	for k in range(l*myout['d'], l*(myout['d']+1)):
+		t = mint[k]
+		if t['category'] in foods:
+			food.append((-1*t['amount'], t['name']))
+			myout['f']+=-1*t['amount']
+		elif t['category'] in ents:
+			ent.append((-1*t['amount'], t['name']))
+			myout['e']+=-1*t['amount']
+		elif t['category'] in necs:
+			nec.append((-1*t['amount'], t['name']))
+			myout['n']+=-1*t['amount']
+
+	socketio.emit('parsedmint', myout)
+	myout['d'] += 1
+
+	Corsair = CUESDK("CUESDK.x64_2015.dll")
+	Corsair.RequestControl(CAM.ExclusiveLightingControl)
+	if mode == 0:
+		r, g = colorMaker(myout['f'], uinp['f']*uinp['b']*myout['d']//30)
+		for key in col1:
+			Corsair.SetLedsColors(CorsairLedColor(key, r, g, 0))
+
+		r, g = colorMaker(myout['e'], uinp['e']*uinp['b']*myout['d']//30)
+		for key in col2:
+			Corsair.SetLedsColors(CorsairLedColor(key, r, g, 0))
+
+		r, g = colorMaker(myout['n'], uinp['n']*uinp['b']*myout['d']//30)
+		for key in col3:
+			Corsair.SetLedsColors(CorsairLedColor(key, r, g, 0))
+
+		r, g = colorMaker(myout['f'] + myout['e'] + myout['n'], 
+						  (1 - uinp['f'] - uinp['e'] - uinp['n']) * 
+					      uinp['b']*myout['d']//30)
+		for key in col4:
+			Corsair.SetLedsColors(CorsairLedColor(key, r, g, 0))
+
+		for key in whitecols:
+			Corsair.SetLedsColors(CorsairLedColor(key, 255, 255, 255))
+	elif mode == 1:
+		tot = (myout['f']+myout['e']+myout['n'])
+		if tot >= uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']):
+			for i in range(0, 12):
+				Corsair.SetLedsColors(
+					[CorsairLedColor(row1[i], 255, 0, 0), 
+					CorsairLedColor(row2[i], 255, 0, 0), 
+					CorsairLedColor(row3[i], 255, 0, 0)])
+				time.sleep(.1)
+		else:
+			keys = int(tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n'])))
+			for i in range(0, keys+1):
+				Corsair.SetLedsColors(
+					[CorsairLedColor(row1[i], 0, 255, 0), 
+					CorsairLedColor(row2[i], 0, 255, 0), 
+					CorsairLedColor(row3[i], 0, 255, 0)])
+				time.sleep(.1)
+			for i in range(keys+1, 12):
+				Corsair.SetLedsColors(
+					[CorsairLedColor(row1[i], 255, 255, 255), 
+					CorsairLedColor(row2[i], 255, 255, 255), 
+					CorsairLedColor(row3[i], 255, 255, 255)])
+				time.sleep(.1)
+	elif mode == 2:
+		#total bar
+		tot = (myout['f']+myout['e']+myout['n'])
+		if tot >= uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n']):
+			for i in range(0, 12):
+				Corsair.SetLedsColors(CorsairLedColor(row4[i], 255, 0, 0)) 
+				time.sleep(.1)
+		else:
+			keys = int(tot * 12 // (uinp['b']*(1 - uinp['f'] - uinp['e'] - uinp['n'])))
+			for i in range(0, keys+1):
+				Corsair.SetLedsColors(CorsairLedColor(row4[i], 0, 255, 0))
+				time.sleep(.1)
+			for i in range(keys+1, 12):
+				Corsair.SetLedsColors(CorsairLedColor(row4[i], 255, 255, 255))
+				time.sleep(.1)
+
+		#food
+		r, g = colorMaker(myout['f'], uinp['f']*uinp['b']*myout['d']//30)
+		keys = int(myout['f'] * 12 // (uinp['b']*uinp['f']))
+		if keys > 11:
+			for k in row1:
+				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
+		else:
+			for i in range(0, keys+1):
+				Corsair.SetLedsColors(CorsairLedColor(row1[i], r, g, 0))
+			for i in range(keys+1, 12):
+				Corsair.SetLedsColors(CorsairLedColor(row1[i], 255, 255, 255))
+
+		#ent
+		r, g = colorMaker(myout['e'], uinp['e']*uinp['b']*myout['d']//30)
+		keys = int(myout['e'] * 12 // (uinp['b']*uinp['e']))
+		if keys > 11:
+			for k in row2:
+				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
+		else:
+			for i in range(0, keys+1):
+				Corsair.SetLedsColors(CorsairLedColor(row2[i], r, g, 0))
+			for i in range(keys+1, 12):
+				Corsair.SetLedsColors(CorsairLedColor(row2[i], 255, 255, 255))
+
+		#nec
+		r, g = colorMaker(myout['n'], uinp['n']*uinp['b']*myout['d']//30)
+		keys = int(myout['n'] * 12 // (uinp['b']*uinp['n']))
+		if keys > 11:
+			for k in row3:
+				Corsair.SetLedsColors(CorsairLedColor(k, 255, 0, 0))
+		else:
+			for i in range(0, keys+1):
+				Corsair.SetLedsColors(CorsairLedColor(row3[i], r, g, 0))
+			for i in range(keys+1, 12):
+				Corsair.SetLedsColors(CorsairLedColor(row3[i], 255, 255, 255))
+	elif mode == 3:
+		tot = (myout['f']+myout['e']+myout['n'])
+		budget = uinp['b']
+		if tot > uinp['b']:
+			budget = tot
+		keys = int(myout['f'] * 12 // budget)
+		keys2 = int((myout['f']+myout['e']) * 12 // budget)
+		keys3 = int((myout['f']+myout['e']+myout['n']) * 12 // budget)
+		for i in range(0, keys+1):
+			Corsair.SetLedsColors(
+				[CorsairLedColor(row1[i], 168, 219, 17), 
+				CorsairLedColor(row2[i], 168, 219, 17), 
+				CorsairLedColor(row3[i], 168, 219, 17)]
+				)
+			time.sleep(.1)
+		for i in range(keys+1, keys2 + 1):
+			Corsair.SetLedsColors(
+				[CorsairLedColor(row1[i], 17, 219, 172), 
+				CorsairLedColor(row2[i], 17, 219, 172), 
+				CorsairLedColor(row3[i], 17, 219, 172)])
+			time.sleep(.1)
+		for i in range(keys2+1, keys3 + 1):
+			Corsair.SetLedsColors(
+				[CorsairLedColor(row1[i], 219, 64, 17), 
+				CorsairLedColor(row2[i], 219, 64, 17), 
+				CorsairLedColor(row3[i], 219, 64, 17)])
+			time.sleep(.1)
+		for i in range(keys3 + 1, 12):
+			Corsair.SetLedsColors(
+				[CorsairLedColor(row1[i], 255, 255, 255), 
+				CorsairLedColor(row2[i], 255, 255, 255), 
+				CorsairLedColor(row3[i], 255, 255, 255)])
+	elif mode == 4:
+		tot = (uinp['f']+uinp['e']+uinp['n'])*uinp['b']
+		budget = 1
+		if tot > 1:
+			budget = tot
+		keys = int(uinp['f'] * 12 // 1)
+		keys2 = int((uinp['f']+uinp['e']) * 12 // 1)
+		keys3 = int((uinp['f']+uinp['e']+uinp['n']) * 12 // 1)
+		for i in range(0, keys+1):
+			Corsair.SetLedsColors(
+				[CorsairLedColor(row1[i], 192, 45, 255), 
+				CorsairLedColor(row2[i], 192, 45, 255), 
+				CorsairLedColor(row3[i], 192, 45, 255)])
+			time.sleep(.1)
+		for i in range(keys+1, keys2 + 1):
+			Corsair.SetLedsColors(
+				[CorsairLedColor(row1[i], 54, 139, 249), 
+				CorsairLedColor(row2[i], 54, 139, 249), 
+				CorsairLedColor(row3[i], 54, 139, 249)])
+			time.sleep(.1)
+		for i in range(keys2+1, keys3 + 1):
+			Corsair.SetLedsColors(
+				[CorsairLedColor(row1[i], 249, 123, 54), 
+				CorsairLedColor(row2[i], 249, 123, 54), 
+				CorsairLedColor(row3[i], 249, 123, 54)])
 			time.sleep(.1)
 		for i in range(keys3 + 1, 12):
 			Corsair.SetLedsColors(
