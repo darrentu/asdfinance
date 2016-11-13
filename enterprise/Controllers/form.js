@@ -20,6 +20,8 @@ angular.module('userForm', [])
                           });
             //localStorage.setItem("budget",budget);
             //console.log(budget);
+            var socket = io.connect('http://localhost:5000');
+
             socket.emit('userinput',budget2);
             var ctxPie2 = document.getElementById("idealPie");
             //console.log($scope.food);
@@ -49,7 +51,6 @@ angular.module('userForm', [])
                 console.log($scope.budget);
                 //$scope.user = angular.copy($scope.master);
             }; */
-          var socket = io.connect('http://localhost:5000');
           socket.emit('nextday');
           socket.on('parsedmint', function (data) {
           $scope.category = data;
