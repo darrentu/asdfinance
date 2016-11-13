@@ -51,6 +51,7 @@ angular.module('userForm', [])
                 console.log($scope.budget);
                 //$scope.user = angular.copy($scope.master);
             }; */
+          var socket = io.connect('http://localhost:5000');
           socket.emit('nextday');
           socket.on('parsedmint', function (data) {
           $scope.category = data;
