@@ -84,19 +84,28 @@
 	      </div>
 	      <div class="modal-body">
 	      	<div class="row">
-	      		<div class="col-sm-6 graphContainer">
+	      		<div id="actualGraph class="col-sm-6 graphContainer">
 		      		<h4 class="centered"> Your Ideal Budget Breakdown </h4>
 		        	<canvas id="actualPie" width="200" height="200"></canvas>
+		        	<div class="checkbox">
+					  <label><input id="actualAdvanced" type="checkbox" value="">Advanced Keyboard Display</label>
+					</div>
 		        </div>
-		        <div class="col-sm-6 graphContainer">
+		        <div id="idealGraph" class="col-sm-6 graphContainer">
 		      		<h4 class="centered"> Your Actual Budget Breakdown </h4>
 		        	<canvas id="idealPie" width="200" height="200"></canvas>
+		        	<div class="checkbox">
+					  <label><input id="idealAdvanced" type="checkbox" value="">Advanced Keyboard Display</label>
+					</div>
 		        </div>
 		    </div>
 		    <div class="row">
-		    	<div class="col-sm-12 graphContainer">
+		    	<div id="compGraph" class="col-sm-12 graphContainer">
 	        		<h4 class="centered"> Your Ideal Breakdown vs. Your Actual Breakdown </h4>
 	        		<canvas id="compRadar" width="200" height="200"></canvas>
+	        		<div class="checkbox">
+					  <label><input id="compAdvanced" type="checkbox" value="">Advanced Keyboard Display</label>
+					</div>
 	        	</div>
 	        </div>
 	      </div>
