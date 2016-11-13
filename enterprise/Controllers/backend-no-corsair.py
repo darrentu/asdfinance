@@ -48,22 +48,25 @@ socketio = SocketIO(app)
 
 @socketio.on('userinput')
 def receive(userinput):
-	global uinp
     uinp = json.decode(userinput)
+    
 
 @socketio.on('nextday')
 def nextDay():
-	global uinp
-	global myout
-	global mint
+	global i
 	global l
+	global mint
 	global food
 	global ent
 	global nec
+	global uinp
+	global myout
 
-	if myout['d'] > 30:
-		myout['d'] = 0
+	if i > 30:
+		i = 0
+
 		mint =  json.load(urllib2.urlopen("http://intuit-mint.herokuapp.com/api/v1/user/transactions"))
+		
 		l = len(mint)//30
 
 	for k in range(l*myout['d'], l*(myout['d']+1)):
@@ -78,8 +81,10 @@ def nextDay():
 			nec.append((-1*t['amount'], t['name']))
 			myout['n']+=-1*t['amount']
 
+
 	socketio.emit('parsedmint', myout)
-	myout['d'] += 1
+	i += 1
+
 
 if __name__ == '__main__':
     socketio.run(app)
