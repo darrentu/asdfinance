@@ -17,11 +17,11 @@ angular.module('userForm', [])
       $scope.reset();
     }]);
 
-var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
+var ctxPie = document.getElementById("actualPie");
+    var actualPie = new Chart(ctxPie, {
         type: 'pie',
         data: {
-            labels: ["Food", "Necessities", "Entertainment"],
+            labels: ["Food (%)", "Necessities (%)", "Entertainment (%)"],
             datasets: [{
                 data: [30, 60, 10],
             backgroundColor: [
@@ -37,48 +37,38 @@ var ctx = document.getElementById("myChart");
         }
     });
 
-var ctx = document.getElementById("myChart2");
-    var myChart2 = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ["Ideal", "Actual", "Ideal", "Actual", "Ideal", "Actual"],
+var ctxRadar = document.getElementById("compRadar");
+    var compRadar = new Chart(ctxRadar, {
+        type: 'radar',
+        data : {
+            labels: ["Food", "Necessities", "Entertainment"],
             datasets: [
                 {
-                    label: "Your Progress",
-                    //Color is either red ("#ff4f14") or green (#13d65d)
-                    backgroundColor: [
-                        "#c02dff",
-                        "#ff4f14",
-                        "#f97b36",
-                        "#13d65d",
-                        "#368bf9",
-                        "#ff4f14"
-                    ],
-                    borderColor: [
-                        "#c02dff",
-                        "#ff4f14",
-                        "#f97b36",
-                        "#13d65d",
-                        "#368bf9",
-                        "#ff4f14"
-                    ],
-                    borderWidth: 1,
-                    data: [30, 55, 50, 35, 10, 15],
+                    label: "Ideal Percentage (%)",
+                    backgroundColor: "rgba(16, 204, 78,0.2)",
+                    borderColor: "rgba(16, 204, 78,1)",
+                    pointBackgroundColor: "rgba(16, 204, 788,1)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgba(16, 204, 78,1)",
+                    data: [30, 60, 10]
+                },
+                {
+                    label: "Actual Percentage (%)",
+                    backgroundColor: "rgba(219, 19, 19,0.2)",
+                    borderColor: "rgba(219, 19, 19,1)",
+                    pointBackgroundColor: "rgba(219, 19, 19,1)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgba(219, 19, 19,1)",
+                    data: [55, 35, 15]
                 }
             ]
-        },
-        options: {
-        scales: {
-            yAxes: [{
-                stacked: true
-            }]
         }
-    }
     });
 
-$('#myModal').on('shown.bs.modal', function () {
+$('#graphModal').on('shown.bs.modal', function () {
   $('#myInput').focus()
 })
 
-/*** jquery Updating ***/
 
