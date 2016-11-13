@@ -60,7 +60,7 @@
 			  <div class="form-group"> 
 			    <div class="col-sm-offset-2 col-sm-6">
 			      <button type="submit" class="btn btn-default" ng-click="update(user)">Submit</button>
-			      <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
+			      <!--<button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>-->
 			    </div>
 			  </div>
 			</form>
@@ -84,18 +84,18 @@
 	      </div>
 	      <div class="modal-body">
 	      	<div class="row">
-	      		<div id="actualGraph" class="col-sm-6 graphContainer">
+	      		<div id="idealGraph" class="col-sm-6 graphContainer">
 		      		<h4 class="centered"> Your Ideal Budget Breakdown </h4>
-		        	<canvas id="actualPie" width="200" height="200"></canvas>
-		        	<div class="checkbox">
-					  <label><input id="actualAdvanced" type="checkbox" value="">Advanced Keyboard Display</label>
-					</div>
-		        </div>
-		        <div id="idealGraph" class="col-sm-6 graphContainer">
-		      		<h4 class="centered"> Your Actual Budget Breakdown </h4>
 		        	<canvas id="idealPie" width="200" height="200"></canvas>
 		        	<div class="checkbox">
 					  <label><input id="idealAdvanced" type="checkbox" value="">Advanced Keyboard Display</label>
+					</div>
+		        </div>
+		        <div id="actualGraph" class="col-sm-6 graphContainer">
+		      		<h4 class="centered"> Your Actual Budget Breakdown </h4>
+		        	<canvas id="actualPie" width="200" height="200"></canvas>
+		        	<div class="checkbox">
+					  <label><input id="actualAdvanced" type="checkbox" value="">Advanced Keyboard Display</label>
 					</div>
 		        </div>
 		    </div>
