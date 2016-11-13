@@ -19,6 +19,7 @@ nec = []
 fkeys = []
 ekeys = []
 nkeys = []
+<<<<<<< HEAD
 mode = 0
 
 col1 = [1, 2, 3, 4, 14, 15, 16, 17, 26, 27, 28, 29, 38, 39, 40, 41, 49, 51, 52, 53]
@@ -29,6 +30,9 @@ col4 = range(103, 121)
 row1 = range(25, 37)
 row2 = range(37, 49)
 row3 = range(49, 61)
+=======
+i = 0
+>>>>>>> c461932422eb62ccebd44a8444673e8da38e2229
 
 mint =  json.load(urllib2.urlopen("http://intuit-mint.herokuapp.com/api/v1/user/transactions"))
 l = len(mint)//30
@@ -67,8 +71,8 @@ socketio = SocketIO(app)
 
 @socketio.on('userinput')
 def receive(userinput):
-	global uinp
     uinp = json.decode(userinput)
+    
 
 @socketio.on('mode')
 def chmd(md):
@@ -77,21 +81,27 @@ def chmd(md):
 
 @socketio.on('nextday')
 def nextDay():
-	global uinp
-	global myout
-	global mint
+	global i
 	global l
+	global mint
 	global food
 	global ent
 	global nec
+<<<<<<< HEAD
 	global col1
 	global col2
 	global col3
 	global col4
+=======
+	global uinp
+	global myout
 
-	if myout['d'] > 30:
-		myout['d'] = 0
+	if i > 30:
+		i = 0
+>>>>>>> c461932422eb62ccebd44a8444673e8da38e2229
+
 		mint =  json.load(urllib2.urlopen("http://intuit-mint.herokuapp.com/api/v1/user/transactions"))
+		
 		l = len(mint)//30
 		myout['f'] = 0
 		myout['e'] = 0
@@ -110,6 +120,7 @@ def nextDay():
 			myout['n']+=-1*t['amount']
 
 	socketio.emit('parsedmint', myout)
+<<<<<<< HEAD
 	myout['d'] += 1
 	# if mode == 0:
 	# 	r, g = colorMaker(myout['f'], uinp['f']*uinp['b']*myout['d']//30)
@@ -146,6 +157,10 @@ def nextDay():
 	# 				CorsairLedColor(row2[i], 0, 255, 0), 
 	# 				CorsairLedColor(row3[i], 0, 255, 0))
 	# 			time.sleep(.1)
+=======
+	i += 1
+
+>>>>>>> c461932422eb62ccebd44a8444673e8da38e2229
 
 if __name__ == '__main__':
     socketio.run(app)
