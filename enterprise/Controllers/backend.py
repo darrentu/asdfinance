@@ -469,21 +469,21 @@ def nextDay():
 		keys3 = int((myout['f']+myout['e']+myout['n']) * 12 // budget)
 		for i in range(0, keys+1):
 			Corsair.SetLedsColors(
-				[CorsairLedColor(row1[i], 168, 219, 17), 
-				CorsairLedColor(row2[i], 168, 219, 17), 
-				CorsairLedColor(row3[i], 168, 219, 17)])
+				[CorsairLedColor(row1[i], 192, 45, 255), 
+				CorsairLedColor(row2[i], 192, 45, 255), 
+				CorsairLedColor(row3[i], 192, 45, 255)])
 			time.sleep(.07)
 		for i in range(keys+1, keys2 + 1):
 			Corsair.SetLedsColors(
-				[CorsairLedColor(row1[i], 17, 219, 172), 
-				CorsairLedColor(row2[i], 17, 219, 172), 
-				CorsairLedColor(row3[i], 17, 219, 172)])
+				[CorsairLedColor(row1[i], 54, 139, 249), 
+				CorsairLedColor(row2[i], 54, 139, 249), 
+				CorsairLedColor(row3[i], 54, 139, 249)])
 			time.sleep(.07)
 		for i in range(keys2+1, keys3 + 1):
 			Corsair.SetLedsColors(
-				[CorsairLedColor(row1[i], 219, 64, 17), 
-				CorsairLedColor(row2[i], 219, 64, 17), 
-				CorsairLedColor(row3[i], 219, 64, 17)])
+				[CorsairLedColor(row1[i], 249, 123, 54), 
+				CorsairLedColor(row2[i], 249, 123, 54), 
+				CorsairLedColor(row3[i], 249, 123, 54)])
 			time.sleep(.07)
 		for i in range(keys3 + 1, 12):
 			Corsair.SetLedsColors(
@@ -501,21 +501,21 @@ def nextDay():
 		keys3 = int((uinp['f']+uinp['e']+uinp['n']) * 12 // 1)
 		for i in range(0, keys+1):
 			Corsair.SetLedsColors(
-				[CorsairLedColor(row1[i], 192, 45, 255), 
-				CorsairLedColor(row2[i], 192, 45, 255), 
-				CorsairLedColor(row3[i], 192, 45, 255)])
+				[CorsairLedColor(row1[i], 168, 219, 17), 
+				CorsairLedColor(row2[i], 168, 219, 17), 
+				CorsairLedColor(row3[i], 168, 219, 17)])
 			time.sleep(.07)
 		for i in range(keys+1, keys2 + 1):
 			Corsair.SetLedsColors(
-				[CorsairLedColor(row1[i], 54, 139, 249), 
-				CorsairLedColor(row2[i], 54, 139, 249), 
-				CorsairLedColor(row3[i], 54, 139, 249)])
+				[CorsairLedColor(row1[i], 17, 219, 172), 
+				CorsairLedColor(row2[i], 17, 219, 172), 
+				CorsairLedColor(row3[i], 17, 219, 172)])
 			time.sleep(.07)
 		for i in range(keys2+1, keys3 + 1):
 			Corsair.SetLedsColors(
-				[CorsairLedColor(row1[i], 249, 123, 54), 
-				CorsairLedColor(row2[i], 249, 123, 54), 
-				CorsairLedColor(row3[i], 249, 123, 54)])
+				[CorsairLedColor(row1[i], 219, 64, 17), 
+				CorsairLedColor(row2[i], 219, 64, 17), 
+				CorsairLedColor(row3[i], 219, 64, 17)])
 			time.sleep(.07)
 		for i in range(keys3 + 1, 12):
 			Corsair.SetLedsColors(
