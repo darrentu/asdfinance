@@ -3,8 +3,29 @@
 angular.module('userForm', [])
     .controller('dataController', ['$scope', function($scope) {
       $scope.master = {};
-      
       var socket = io.connect('http://localhost:5000');
+      $scope.update = function(user) {
+
+        $scope.master = angular.copy(user);
+        var budget = JSON.stringify({
+                          "f":user.total,
+                          "e":user.food,
+                          "n":user.necessities,
+                          "b":user.entertainment
+                          });
+        console.log(budget);
+        socket.emit('userinput',budget)
+        
+        
+      };
+
+      $scope.reset = function() {
+        $scope.user = angular.copy($scope.master);
+      };
+
+      $scope.reset();
+      
+      
       socket.emit('nextday');
       socket.on('parsedmint', function (data) {
         $scope.category = data;
@@ -12,13 +33,14 @@ angular.module('userForm', [])
          
         $scope.food = Math.round((data.n/$scope.totalSpentToday)*100);         
         $scope.entertainment = Math.round((data.n/$scope.totalSpentToday)*100);      
-        $scope.necessities = Math.round((data.n/$scope.totalSpentToday)*100);        
-         
+        $scope.necessities = Math.round((data.n/$scope.totalSpentToday)*100);  
+        console.log($scope.food);      
+         /*
         console.log($scope.food);
         console.log($scope.entertainment);
         console.log($scope.necessities);
         console.log($scope.totalSpentToday);
-        console.log(data);
+        console.log(data);*/
 
         var ctxPie1 = document.getElementById("actualPie");
             var actualPie = new Chart(ctxPie1, {
@@ -102,15 +124,7 @@ angular.module('userForm', [])
             });
     });
       
-      $scope.update = function(user) {
-        $scope.master = angular.copy(user);
-      };
-
-      $scope.reset = function() {
-        $scope.user = angular.copy($scope.master);
-      };
-
-      $scope.reset();
+      
     }]);
 
 $( ".graphContainer" ).hover(
