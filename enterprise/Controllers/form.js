@@ -28,8 +28,8 @@ angular.module('userForm', [])
       $scope.reset();
     }]);
 
-var ctxPie = document.getElementById("actualPie");
-    var actualPie = new Chart(ctxPie, {
+var ctxPie1 = document.getElementById("actualPie");
+    var actualPie = new Chart(ctxPie1, {
         type: 'pie',
         data: {
 
@@ -46,6 +46,28 @@ var ctxPie = document.getElementById("actualPie");
                 "#c02dff",
                 "#f97b36",
                 "#368bf9"
+            ]}]
+        }
+    });
+
+var ctxPie2 = document.getElementById("idealPie");
+    var idealPie = new Chart(ctxPie2, {
+        type: 'pie',
+        data: {
+
+            labels: ["Food (%)", "Necessities (%)", "Entertainment (%)"],
+
+            datasets: [{
+                data: [55, 35, 10],
+            backgroundColor: [
+                "#a8db11",
+                "#db4011",
+                "#11dbac"
+            ],
+            hoverBackgroundColor: [
+                "#a8db11",
+                "#db4011",
+                "#11dbac"
             ]}]
         }
     });
@@ -74,14 +96,17 @@ var ctxRadar = document.getElementById("compRadar");
                     pointBorderColor: "#fff",
                     pointHoverBackgroundColor: "#fff",
                     pointHoverBorderColor: "rgba(219, 19, 19,1)",
-                    data: [55, 35, 15]
+                    data: [55, 35, 10]
                 }
             ]
+        },
+        options: {
+            scale: {
+                ticks: {
+                    beginAtZero: true
+                }
+            }
         }
     });
-
-$('#graphModal').on('shown.bs.modal', function () {
-  $('#myInput').focus()
-})
 
 
